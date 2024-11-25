@@ -1,2 +1,2 @@
-# Library-Information-System
-Library Information System using JAVAFX
+# Library-Management-System
+Library Management System using JAVAFX
