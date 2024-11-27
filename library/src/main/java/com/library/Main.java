@@ -7,10 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 /**
  * JavaFX App
@@ -21,7 +17,7 @@ public class Main extends Application
     public void start(Stage stage) throws IOException 
     {
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root);
         stage.setTitle("Library Management System");
         stage.setScene(scene);
         stage.show();
