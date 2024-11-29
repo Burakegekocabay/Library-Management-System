@@ -14,17 +14,43 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.scene.control.TextField;    
+import javafx.scene.input.MouseEvent;  
 
-public class ControllerMain 
-{
-     @FXML
-     private Button staffLoginPageButton;
+public class ControllerMain {
 
-     @FXML
-     private PasswordField passwordField;
+    @FXML
+    private Button staffLoginPageButton;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private Button showPasswordButton;
+
+    @FXML
+    private TextField passwordTextField; 
+  
+    @FXML
+    void showHidePassword() {
+        
+        showPasswordButton.setOnMousePressed(this::showPassword);  
+        showPasswordButton.setOnMouseReleased(this::hidePassword);  
+    }
+
     
-     @FXML
-     private Button showPasswordButton;  
+    private void showPassword(MouseEvent event) {
+        passwordTextField.setText(passwordField.getText());
+        passwordTextField.setVisible(true);  
+        passwordField.setVisible(false);  
+    }
+
+    
+    private void hidePassword(MouseEvent event) {
+        passwordTextField.setVisible(false); 
+        passwordField.setVisible(true);  
+    }
+
 
      @FXML
      void toStaffLoginPage()
