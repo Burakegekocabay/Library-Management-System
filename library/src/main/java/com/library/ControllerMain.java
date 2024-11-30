@@ -37,12 +37,11 @@ public class ControllerMain {
     private CheckBox showPasswordCheckBox;
 
     @FXML
-void initialize() {
+    void initialize() {
     passwordTextField.setVisible(false);
-    passwordTextField.managedProperty().bind(passwordTextField.visibleProperty());
-    passwordField.managedProperty().bind(passwordField.visibleProperty());
-
-    
+    passwordTextField.setManaged(false);
+    passwordField.setManaged(true); 
+    passwordField.setVisible(true); 
     showPasswordCheckBox.setOnAction(event -> showHidePassword());
 }
 
@@ -152,7 +151,7 @@ void initialize() {
 
      public static void create(Connection conn) 
      {
-          String database = "CREATE DATABASE "+Config.getDbNAME();  
+          String database = "CREATE DATABASE "+ Config.getDbNAME();  
         
           String stafftable = "CREATE TABLE IF NOT EXISTS "+ Config.getDbNAME() + ".staff (" +
                                   "username VARCHAR(255) NOT NULL, " +
