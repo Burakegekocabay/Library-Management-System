@@ -74,7 +74,7 @@ public class ControllerMain {
                if (!databaseExists(conn))
                {
                     create(conn);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("reset.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reset.fxml"));
                     AnchorPane root2 = loader.load();
                     Stage stage = new Stage();
                     stage.setTitle("Staff Login Page");
@@ -86,7 +86,7 @@ public class ControllerMain {
                     return ;
                }
 
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("Stafflogin.fxml"));
+               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/Stafflogin.fxml"));
                AnchorPane root2 = loader.load();
                Stage stage = new Stage();
                stage.setTitle("Staff Login Page");
@@ -112,7 +112,7 @@ public class ControllerMain {
           try(Connection conn = DriverManager.getConnection(Config.getUrl(),Config.getUser(),Config.getPassword()))
           {
                // Validation operation will be here
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("MemberMainPage.fxml"));
+               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/MemberMainPage.fxml"));
                AnchorPane root2 = loader.load();
                Stage stage = new Stage();
                stage.setTitle("Member Main Page");
