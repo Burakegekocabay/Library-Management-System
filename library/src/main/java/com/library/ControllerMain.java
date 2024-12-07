@@ -26,24 +26,23 @@ public class ControllerMain {
     private PasswordField passwordField;
 
     @FXML
-    private Button showPasswordButton;
-
-    @FXML
     private TextField passwordTextField;
-
-    
 
     @FXML
     private CheckBox showPasswordCheckBox;
 
     @FXML
-    void initialize() {
-    passwordTextField.setVisible(false);
-    passwordTextField.setManaged(false);
-    passwordField.setManaged(true); 
-    passwordField.setVisible(true); 
-    showPasswordCheckBox.setOnAction(event -> showHidePassword());
-}
+    void initialize() 
+    {
+        if (passwordTextField != null && passwordField != null)
+        {
+            passwordTextField.setVisible(false);
+            passwordTextField.setManaged(false);
+            passwordField.setManaged(true); 
+            passwordField.setVisible(true); 
+            showPasswordCheckBox.setOnAction(event -> showHidePassword());
+        }
+    }
 
     
     @FXML
@@ -59,9 +58,9 @@ public class ControllerMain {
         else{
             passwordField.setText(passwordTextField.getText());
             passwordTextField.setVisible(false); 
-        passwordField.setVisible(true);  
-        passwordTextField.setManaged(false);
-        passwordField.setManaged(true);
+            passwordField.setVisible(true);  
+            passwordTextField.setManaged(false);
+            passwordField.setManaged(true);
         }
     }
 
@@ -97,13 +96,13 @@ public class ControllerMain {
                
                 
           }
-          catch(Exception e)
-          {
-               Alert alert = new Alert(Alert.AlertType.ERROR);
-               alert.setTitle("MYSQL Server Error");
-               alert.setContentText("MYSQL server couldn't find.");
-               alert.showAndWait();
-          }
+            catch(Exception e)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("MYSQL Server Error");
+                alert.setContentText("MYSQL server couldn't find.");
+                alert.showAndWait();
+            }
      }
 
      @FXML
