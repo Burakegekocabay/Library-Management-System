@@ -3,6 +3,7 @@ package com.library;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -76,7 +77,7 @@ public class ControllerMain {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reset.fxml"));
                     AnchorPane root2 = loader.load();
                     Stage stage = new Stage();
-                    stage.setTitle("Staff Login Page");
+                    stage.setTitle("Reset password");
                     stage.setScene(new Scene(root2));
                     stage.show();
     
@@ -95,6 +96,7 @@ public class ControllerMain {
           }
             catch(Exception e)
             {
+                e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
@@ -152,19 +154,27 @@ public class ControllerMain {
 
      public static void create(Connection conn) 
      {
-          String database = "CREATE DATABASE "+ Config.getDbNAME();  
-        
-          String stafftable = "CREATE TABLE IF NOT EXISTS "+ Config.getDbNAME() + ".staff (" +
-                                  "username VARCHAR(255) NOT NULL, " +
-                                  "pass VARCHAR(255) NOT NULL, " +
-                                  "securityKEY VARCHAR(255) NOT NULL" +
-                                  ")";
-        
+        String stafftable = "CREATE TABLE "+ Config.getDbNAME() + ".staff ("
+        +"username VARCHAR(255) NOT NULL, "
+        +"pass VARCHAR(255) NOT NULL, " 
+        +"securityKEY VARCHAR(255) NOT NULL)";
+
+        String insertSQL = "INSERT INTO staff (username, pass, securityKEY)"
+        + "VALUES (?, ?, ?)";
+
         try (Statement stmt = conn.createStatement()) 
         {
-            stmt.executeUpdate(database); //Create LibraryManagementSystem Database
+            stmt.executeUpdate("CREATE DATABASE "+ Config.getDbNAME()); //Create LibraryManagementSystem Database
+            stmt.executeUpdate("USE " + Config.getDbNAME());
+            stmt.executeUpdate("DROP TABLE IF EXISTS staff");
             stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
+            PreparedStatement preparedStatement = conn.prepareStatement(insertSQL);
+            preparedStatement.setString(1, "admin");
+            preparedStatement.setString(2, "admin");
+            preparedStatement.setString(3, "");
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("MYSQL Server");
