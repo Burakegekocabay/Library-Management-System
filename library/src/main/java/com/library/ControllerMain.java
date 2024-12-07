@@ -68,7 +68,7 @@ public class ControllerMain {
      @FXML
      void toStaffLoginPage()
      {
-          try(Connection conn = DriverManager.getConnection(Config.getDbURL(),Config.getUser(),Config.getPassword()))
+          try(Connection conn = DriverManager.getConnection(Config.getLoginURL(),Config.getUser(),Config.getPassword()))
           {
                if (!databaseExists(conn))
                {
@@ -110,7 +110,7 @@ public class ControllerMain {
      @FXML
      void toMemberMainPage()
      {
-          try(Connection conn = DriverManager.getConnection(Config.getDbNAME(),Config.getUser(),Config.getPassword()))
+          try(Connection conn = DriverManager.getConnection(Config.getDbURL(),Config.getUser(),Config.getPassword()))
           {
                // Validation operation will be here
                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/MemberMainPage.fxml"));
@@ -157,7 +157,7 @@ public class ControllerMain {
           String stafftable = "CREATE TABLE IF NOT EXISTS "+ Config.getDbNAME() + ".staff (" +
                                   "username VARCHAR(255) NOT NULL, " +
                                   "pass VARCHAR(255) NOT NULL, " +
-                                  "securityKEY VARCHAR(255) NOT NULL, " +
+                                  "securityKEY VARCHAR(255) NOT NULL" +
                                   ")";
         
         try (Statement stmt = conn.createStatement()) 
