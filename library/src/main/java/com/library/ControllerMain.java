@@ -68,7 +68,7 @@ public class ControllerMain {
      @FXML
      void toStaffLoginPage()
      {
-          try(Connection conn = DriverManager.getConnection(Config.getUrl(),Config.getUser(),Config.getPassword()))
+          try(Connection conn = DriverManager.getConnection(Config.getDbURL(),Config.getUser(),Config.getPassword()))
           {
                if (!databaseExists(conn))
                {
@@ -84,7 +84,6 @@ public class ControllerMain {
                     currentStage.close();
                     return ;
                }
-
                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/Stafflogin.fxml"));
                AnchorPane root2 = loader.load();
                Stage stage = new Stage();
@@ -93,14 +92,17 @@ public class ControllerMain {
                stage.show();
                Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
                currentStage.close();
-               
-                
           }
             catch(Exception e)
             {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("MYSQL Server Error");
-                alert.setContentText("MYSQL server couldn't find.");
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please ensure that your MySQL server is running. Additionally,\n"
+                +"Environment variables should be set as follows:\n"
+                +"MYSQL_URL = yourServerHost:3306\n"
+                +"MYSQL_USER = username\n"
+                +"MYSQL_PASS = password(for no password do not create MYSQL_PASS variable)\n");
                 alert.showAndWait();
             }
      }
@@ -108,7 +110,7 @@ public class ControllerMain {
      @FXML
      void toMemberMainPage()
      {
-          try(Connection conn = DriverManager.getConnection(Config.getUrl(),Config.getUser(),Config.getPassword()))
+          try(Connection conn = DriverManager.getConnection(Config.getDbNAME(),Config.getUser(),Config.getPassword()))
           {
                // Validation operation will be here
                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/MemberMainPage.fxml"));
@@ -160,17 +162,14 @@ public class ControllerMain {
         
         try (Statement stmt = conn.createStatement()) 
         {
-          stmt.executeUpdate(database); //Create LibraryManagementSystem Database
-          stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
-
-
+            stmt.executeUpdate(database); //Create LibraryManagementSystem Database
+            stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
         } catch (SQLException e) {
-               Alert alert = new Alert(Alert.AlertType.ERROR);
-               alert.setTitle("MYSQL Server Error");
-               alert.setContentText("MYSQL server couldn't find.");
-               alert.showAndWait();
         }
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("MYSQL Server");
+        alert.setContentText("Database Created");
+        alert.showAndWait();
     }
 
   
