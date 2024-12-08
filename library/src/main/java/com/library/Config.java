@@ -2,37 +2,31 @@ package com.library;
 
 public class Config 
 {
-    private static String url = "jdbc:mysql://localhost:3306"; // Localhost adress
-    private static String user = "root"; //default localhost username
-    private static String password = ""; //default localhost password
     private static String dbNAME = "LibraryManagementSystem";
-
+    private static String connector = "jdbc:mysql://";
     
-    public static String getUrl() {
-        return url;
+    public static String getLoginURL() {
+        return connector+System.getenv("MYSQL_URL");
     }
 
     public static String getUser() {
-        return user;
+        return System.getenv("MYSQL_USER");
     }
 
     public static String getPassword() {
-        return password;
+        if (System.getenv("MYSQL_PASS") == null)
+            return "";
+        else
+            return System.getenv("MYSQL_PASS");
     }
 
     public static String getDbNAME() {
         return dbNAME;
     }
 
-    public static String getConnectionString() {
-        return url + "/" + dbNAME;
+    public static String getDbURL() {
+        return connector + "/" + dbNAME;
     }
 
-    /*  
-    Setter methods will be added to this class (Config.java)
-     once config.fxml is completed and ready to use.
-    */
-
-
-
+    //Connection  method will be added here
 }

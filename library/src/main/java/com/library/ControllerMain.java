@@ -3,6 +3,7 @@ package com.library;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -26,24 +27,23 @@ public class ControllerMain {
     private PasswordField passwordField;
 
     @FXML
-    private Button showPasswordButton;
-
-    @FXML
     private TextField passwordTextField;
-
-    
 
     @FXML
     private CheckBox showPasswordCheckBox;
 
     @FXML
-    void initialize() {
-    passwordTextField.setVisible(false);
-    passwordTextField.setManaged(false);
-    passwordField.setManaged(true); 
-    passwordField.setVisible(true); 
-    showPasswordCheckBox.setOnAction(event -> showHidePassword());
-}
+    void initialize() 
+    {
+        if (passwordTextField != null && passwordField != null)
+        {
+            passwordTextField.setVisible(false);
+            passwordTextField.setManaged(false);
+            passwordField.setManaged(true); 
+            passwordField.setVisible(true); 
+            showPasswordCheckBox.setOnAction(event -> showHidePassword());
+        }
+    }
 
     
     @FXML
@@ -59,9 +59,9 @@ public class ControllerMain {
         else{
             passwordField.setText(passwordTextField.getText());
             passwordTextField.setVisible(false); 
-        passwordField.setVisible(true);  
-        passwordTextField.setManaged(false);
-        passwordField.setManaged(true);
+            passwordField.setVisible(true);  
+            passwordTextField.setManaged(false);
+            passwordField.setManaged(true);
         }
     }
 
@@ -69,15 +69,15 @@ public class ControllerMain {
      @FXML
      void toStaffLoginPage()
      {
-          try(Connection conn = DriverManager.getConnection(Config.getUrl(),Config.getUser(),Config.getPassword()))
+          try(Connection conn = DriverManager.getConnection(Config.getLoginURL(),Config.getUser(),Config.getPassword()))
           {
                if (!databaseExists(conn))
                {
                     create(conn);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("reset.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reset.fxml"));
                     AnchorPane root2 = loader.load();
                     Stage stage = new Stage();
-                    stage.setTitle("Staff Login Page");
+                    stage.setTitle("Reset password");
                     stage.setScene(new Scene(root2));
                     stage.show();
     
@@ -85,8 +85,7 @@ public class ControllerMain {
                     currentStage.close();
                     return ;
                }
-
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("Stafflogin.fxml"));
+               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/Stafflogin.fxml"));
                AnchorPane root2 = loader.load();
                Stage stage = new Stage();
                stage.setTitle("Staff Login Page");
@@ -94,25 +93,29 @@ public class ControllerMain {
                stage.show();
                Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
                currentStage.close();
-               
-                
           }
-          catch(Exception e)
-          {
-               Alert alert = new Alert(Alert.AlertType.ERROR);
-               alert.setTitle("MYSQL Server Error");
-               alert.setContentText("MYSQL server couldn't find.");
-               alert.showAndWait();
-          }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please ensure that your MySQL server is running. Additionally,\n"
+                +"Environment variables should be set as follows:\n"
+                +"MYSQL_URL = yourServerHost:3306\n"
+                +"MYSQL_USER = username\n"
+                +"MYSQL_PASS = password(for no password do not create MYSQL_PASS variable)\n");
+                alert.showAndWait();
+            }
      }
 
      @FXML
      void toMemberMainPage()
      {
-          try(Connection conn = DriverManager.getConnection(Config.getUrl(),Config.getUser(),Config.getPassword()))
+          try(Connection conn = DriverManager.getConnection(Config.getDbURL(),Config.getUser(),Config.getPassword()))
           {
                // Validation operation will be here
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("MemberMainPage.fxml"));
+               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/MemberMainPage.fxml"));
                AnchorPane root2 = loader.load();
                Stage stage = new Stage();
                stage.setTitle("Member Main Page");
@@ -151,27 +154,32 @@ public class ControllerMain {
 
      public static void create(Connection conn) 
      {
-          String database = "CREATE DATABASE "+ Config.getDbNAME();  
-        
-          String stafftable = "CREATE TABLE IF NOT EXISTS "+ Config.getDbNAME() + ".staff (" +
-                                  "username VARCHAR(255) NOT NULL, " +
-                                  "pass VARCHAR(255) NOT NULL, " +
-                                  "securityKEY VARCHAR(255) NOT NULL, " +
-                                  ")";
-        
+        String stafftable = "CREATE TABLE "+ Config.getDbNAME() + ".staff ("
+        +"username VARCHAR(255) NOT NULL, "
+        +"pass VARCHAR(255) NOT NULL, " 
+        +"securityKEY VARCHAR(255) NOT NULL)";
+
+        String insertSQL = "INSERT INTO staff (username, pass, securityKEY)"
+        + "VALUES (?, ?, ?)";
+
         try (Statement stmt = conn.createStatement()) 
         {
-          stmt.executeUpdate(database); //Create LibraryManagementSystem Database
-          stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
-
-
+            stmt.executeUpdate("CREATE DATABASE "+ Config.getDbNAME()); //Create LibraryManagementSystem Database
+            stmt.executeUpdate("USE " + Config.getDbNAME());
+            stmt.executeUpdate("DROP TABLE IF EXISTS staff");
+            stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
+            PreparedStatement preparedStatement = conn.prepareStatement(insertSQL);
+            preparedStatement.setString(1, "admin");
+            preparedStatement.setString(2, "admin");
+            preparedStatement.setString(3, "");
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-               Alert alert = new Alert(Alert.AlertType.ERROR);
-               alert.setTitle("MYSQL Server Error");
-               alert.setContentText("MYSQL server couldn't find.");
-               alert.showAndWait();
+            e.printStackTrace();
         }
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("MYSQL Server");
+        alert.setContentText("Database Created");
+        alert.showAndWait();
     }
 
   
