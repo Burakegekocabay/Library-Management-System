@@ -77,7 +77,7 @@ public class ControllerMain {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reset.fxml"));
                     AnchorPane root2 = loader.load();
                     Stage stage = new Stage();
-                    stage.setTitle("Reset password");
+                    stage.setTitle("Create Password");
                     stage.setScene(new Scene(root2));
                     stage.show();
     
@@ -85,7 +85,7 @@ public class ControllerMain {
                     currentStage.close();
                     return ;
                }
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/Stafflogin.fxml"));
+               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffLogin.fxml"));
                AnchorPane root2 = loader.load();
                Stage stage = new Stage();
                stage.setTitle("Staff Login Page");
