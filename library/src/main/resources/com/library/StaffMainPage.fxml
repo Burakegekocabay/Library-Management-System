@@ -11,6 +11,5 @@
       <Button layoutX="79.0" layoutY="293.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="130.0" text="Button" />
       <Button layoutX="243.0" layoutY="293.0" mnemonicParsing="false" prefHeight="126.0" prefWidth="130.0" text="Button" />
       <Button layoutX="191.0" layoutY="558.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" text="Home" />
-      <Button layoutX="373.0" layoutY="559.0" mnemonicParsing="false" text="Settings" />
    </children>
 </AnchorPane>
