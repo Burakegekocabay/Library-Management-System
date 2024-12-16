@@ -6,20 +6,25 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMain">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMain">
    <children>
-      <TextField fx:id="member_IDField" layoutX="121.0" layoutY="211.0" prefHeight="38.0" prefWidth="208.0" promptText="Member ID" />
-      <TextField fx:id="passwordTextField" layoutX="121.0" layoutY="261.0" prefHeight="38.0" prefWidth="208.0" promptText="Password" />
-      <PasswordField fx:id="passwordField" layoutX="121.0" layoutY="261.0" prefHeight="38.0" prefWidth="208.0" promptText="Password" />
-      <Button fx:id="member_Login_Button" layoutX="120.0" layoutY="347.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="208.0" text="Login" />
-      <Button fx:id="staffLoginPageButton" layoutX="153.0" layoutY="545.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="143.0" text="Staff Login" onAction="#toStaffLoginPage" />
-      <CheckBox id="showPasswordCheckBox" fx:id="showPasswordCheckBox" layoutX="120.0" layoutY="309.0" mnemonicParsing="false" text="Show Password" />
-      <Label alignment="CENTER" layoutX="111.0" layoutY="133.0" prefHeight="38.0" prefWidth="228.0" text="Member Login">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
+      <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0">
+         <children>
+            <TextField fx:id="member_IDField" layoutX="121.0" layoutY="211.0" prefHeight="38.0" prefWidth="208.0" promptText="Member ID" />
+            <TextField fx:id="passwordTextField" layoutX="121.0" layoutY="261.0" prefHeight="38.0" prefWidth="208.0" promptText="Password" />
+            <PasswordField fx:id="passwordField" layoutX="121.0" layoutY="261.0" prefHeight="38.0" prefWidth="208.0" promptText="Password" />
+            <Button fx:id="member_Login_Button" layoutX="120.0" layoutY="347.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="208.0" text="Login" />
+            <Button fx:id="staffLoginPageButton" layoutX="153.0" layoutY="545.0" mnemonicParsing="false" onAction="#toStaffLoginPage" prefHeight="11.0" prefWidth="143.0" text="Staff Login" />
+            <CheckBox fx:id="showPasswordCheckBox" layoutX="120.0" layoutY="309.0" mnemonicParsing="false" text="Show Password" />
+            <Label alignment="CENTER" layoutX="111.0" layoutY="133.0" prefHeight="38.0" prefWidth="228.0" text="Member Login">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>

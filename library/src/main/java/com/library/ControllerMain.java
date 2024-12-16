@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;    
 
@@ -31,10 +33,25 @@ public class ControllerMain {
 
     @FXML
     private CheckBox showPasswordCheckBox;
+    @FXML
+    public StackPane root;
+    @FXML
+    public AnchorPane anchorPane;
 
     @FXML
     void initialize() 
     {
+
+        if (root != null && anchorPane != null) {
+            var scaleX = Bindings.min(Bindings.divide(root.widthProperty(), 450.0), 1.5); 
+            var scaleY = Bindings.min(Bindings.divide(root.heightProperty(), 600.0), 1.5); 
+            anchorPane.scaleXProperty().bind(Bindings.min(scaleX, scaleY));
+            anchorPane.scaleYProperty().bind(Bindings.min(scaleX, scaleY));
+        } else {
+            System.err.println("root veya anchorPane null!");
+        }
+
+
         if (passwordTextField != null && passwordField != null)
         {
             passwordTextField.setVisible(false);
