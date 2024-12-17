@@ -1,10 +1,8 @@
 package com.library;
 
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Connection;
 
 import java.util.UUID;
 
@@ -54,16 +52,9 @@ public class ControllerReset
     @FXML
     private TextArea area;
 
-    Connection conn;
-
     @FXML
     void initialize() 
     {
-        try {
-            conn = DriverManager.getConnection(Config.getDbURL(),Config.getUser(),Config.getPassword());
-        } catch (Exception e) {
-        }
-
         if (passwordTextField != null && passwordField != null)
         {
             passwordTextField.setVisible(false);
@@ -124,7 +115,7 @@ public class ControllerReset
     {
         String query = "SELECT securityKEY FROM staff WHERE securityKEY IS NULL LIMIT 1";
 
-        try (PreparedStatement stmt = conn.prepareStatement(query);
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
                 return(!rs.next());
@@ -191,7 +182,7 @@ public class ControllerReset
         String updateQuery = "UPDATE staff SET username = ?, pass = ?, securityKEY = ?";
         try 
         {
-            PreparedStatement stmt = conn.prepareStatement(updateQuery);
+            PreparedStatement stmt = Config.getConn().prepareStatement(updateQuery);
 
             stmt.setString(1, InjectionPreventer(UsernameField.getText()));
 
