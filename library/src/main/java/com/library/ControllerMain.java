@@ -41,15 +41,13 @@ public class ControllerMain {
     void initialize() 
     {
         Config.Connect();
+        
         if (root != null && anchorPane != null) {
             var scaleX = Bindings.min(Bindings.divide(root.widthProperty(), 450.0), 1.5); 
             var scaleY = Bindings.min(Bindings.divide(root.heightProperty(), 600.0), 1.5); 
             anchorPane.scaleXProperty().bind(Bindings.min(scaleX, scaleY));
             anchorPane.scaleYProperty().bind(Bindings.min(scaleX, scaleY));
-        } else {
-            System.err.println("root veya anchorPane null!");
         }
-
 
         if (passwordTextField != null && passwordField != null)
         {

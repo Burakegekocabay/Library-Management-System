@@ -1,10 +1,14 @@
 package com.library;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class ControllerStaffLogin
 {
@@ -59,5 +63,21 @@ public class ControllerStaffLogin
             StaffTextfield.setManaged(false);
             StaffPasswordfield.setManaged(true);
         }
+    }
+
+    @FXML
+    void forgot_password()
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reset.fxml"));
+        AnchorPane root2;
+        try {
+            root2 = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Forgot Password");
+            stage.setScene(new Scene(root2));
+            stage.show();
+            Stage currentStage = (Stage) forgotPassword.getScene().getWindow();
+            currentStage.close();
+        } catch (Exception e) {}
     }
 }
