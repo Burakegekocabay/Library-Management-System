@@ -118,7 +118,7 @@ public class ControllerReset
         try (PreparedStatement stmt = Config.getConn().prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
-                return(!rs.next());
+                return(rs.next());
             
         } catch (SQLException e) {
             
@@ -149,6 +149,15 @@ public class ControllerReset
     @FXML
     void ResetMethod()
     {
+        if ((UsernameField.getText().equals("")) || (passwordField.getText().equals("") && passwordTextField.getText().equals("")))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill in all fields.");
+            alert.showAndWait();
+            return ;
+        }
         if (!showKeyCheckBox.isDisabled()) // Staff has already created a key
         {
             
