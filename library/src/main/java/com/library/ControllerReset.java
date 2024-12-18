@@ -1,10 +1,8 @@
 package com.library;
 
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Connection;
 
 import java.util.UUID;
 
@@ -54,16 +52,9 @@ public class ControllerReset
     @FXML
     private TextArea area;
 
-    Connection conn;
-
     @FXML
     void initialize() 
     {
-        try {
-            conn = DriverManager.getConnection(Config.getDbURL(),Config.getUser(),Config.getPassword());
-        } catch (Exception e) {
-        }
-
         if (passwordTextField != null && passwordField != null)
         {
             passwordTextField.setVisible(false);
@@ -124,7 +115,7 @@ public class ControllerReset
     {
         String query = "SELECT securityKEY FROM staff WHERE securityKEY IS NULL LIMIT 1";
 
-        try (PreparedStatement stmt = conn.prepareStatement(query);
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
                 return(!rs.next());
@@ -158,24 +149,45 @@ public class ControllerReset
     @FXML
     void ResetMethod()
     {
-        if (showKeyCheckBox.isDisable()) //it means the first sign up
+        if (!showKeyCheckBox.isDisabled()) // Staff has already created a key
         {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Security Key");
-            alert.setHeaderText(null);
-            String key = makeKEY();
-            alert.setContentText("MAKE SURE TO STORE THIS KEY SECURELY \n "+ key);
-            alert.showAndWait();
-            updateDetails(key);
-            key = null;
+            
+            String query = "SELECT securityKEY FROM staff WHERE securityKEY IS NOT NULL LIMIT 1";
+            try 
+            {
+                Config.getConn().createStatement().executeUpdate("USE LibraryManagementSystem");
+                try (PreparedStatement stmt = Config.getConn().prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) 
+                {
+                    if (rs.next()) 
+                    {
+                        String key = rs.getString("securityKEY");
+                        //Controlling if key in database is equal to the one in the field
+                        if (!(InjectionPreventer(KeyPasswordField.getText()).equals(key) || InjectionPreventer(KeyTextField.getText()).equals(key)))
+                        {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Invalid Security Key");
+                            alert.showAndWait();
+                            return;
+                        }
+                    }
+                }
+            } catch (Exception e) {}
         }
-        else
-        {
-            //Security key validation operation will be here
-        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Security Key");
+        alert.setHeaderText(null);
+        String key = makeKEY();
+        alert.setContentText("MAKE SURE TO STORE THIS KEY SECURELY \n "+ key);
+        alert.showAndWait();
+        updateDetails(key);
+        key = null;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffMainPage.fxml"));
         AnchorPane root2;
-        try {
+        try 
+        {
             root2 = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Staff Main Page");
@@ -183,7 +195,7 @@ public class ControllerReset
             stage.show();
             Stage currentStage = (Stage) resetButton.getScene().getWindow();
             currentStage.close();
-        } catch (Exception e) {}
+        } catch (Exception e){}
     }
 
     void updateDetails(String key) //updating username pass and key
@@ -191,7 +203,7 @@ public class ControllerReset
         String updateQuery = "UPDATE staff SET username = ?, pass = ?, securityKEY = ?";
         try 
         {
-            PreparedStatement stmt = conn.prepareStatement(updateQuery);
+            PreparedStatement stmt = Config.getConn().prepareStatement(updateQuery);
 
             stmt.setString(1, InjectionPreventer(UsernameField.getText()));
 

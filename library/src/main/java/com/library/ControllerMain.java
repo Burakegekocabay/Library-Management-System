@@ -1,8 +1,7 @@
 package com.library;
 
 import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,16 +40,14 @@ public class ControllerMain {
     @FXML
     void initialize() 
     {
-
+        Config.Connect();
+        
         if (root != null && anchorPane != null) {
             var scaleX = Bindings.min(Bindings.divide(root.widthProperty(), 450.0), 1.5); 
             var scaleY = Bindings.min(Bindings.divide(root.heightProperty(), 600.0), 1.5); 
             anchorPane.scaleXProperty().bind(Bindings.min(scaleX, scaleY));
             anchorPane.scaleYProperty().bind(Bindings.min(scaleX, scaleY));
-        } else {
-            System.err.println("root veya anchorPane null!");
         }
-
 
         if (passwordTextField != null && passwordField != null)
         {
@@ -86,11 +83,11 @@ public class ControllerMain {
      @FXML
      void toStaffLoginPage()
      {
-          try(Connection conn = DriverManager.getConnection(Config.getLoginURL(),Config.getUser(),Config.getPassword()))
+          try
           {
-               if (!databaseExists(conn))
+               if (!databaseExists())
                {
-                    create(conn);
+                    create();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reset.fxml"));
                     AnchorPane root2 = loader.load();
                     Stage stage = new Stage();
@@ -111,25 +108,16 @@ public class ControllerMain {
                Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
                currentStage.close();
           }
-            catch(Exception e)
+            catch(IOException e)
             {
                 e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Please ensure that your MySQL server is running. Additionally,\n"
-                +"Environment variables should be set as follows:\n"
-                +"MYSQL_URL = yourServerHost:3306\n"
-                +"MYSQL_USER = username\n"
-                +"MYSQL_PASS = password(for no password do not create MYSQL_PASS variable)\n");
-                alert.showAndWait();
             }
      }
 
      @FXML
      void toMemberMainPage()
      {
-          try(Connection conn = DriverManager.getConnection(Config.getDbURL(),Config.getUser(),Config.getPassword()))
+          try
           {
                // Validation operation will be here
                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/MemberMainPage.fxml"));
@@ -142,34 +130,31 @@ public class ControllerMain {
                Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
                currentStage.close();
           }
-          catch(Exception e)
+          catch(IOException e)
           {
-               Alert alert = new Alert(Alert.AlertType.ERROR);
-               alert.setTitle("MYSQL Server Error");
-               alert.setContentText("MYSQL server couldn't find.");
-               alert.showAndWait();
+            e.printStackTrace();
           }
      }
 
 
-     public static boolean databaseExists(Connection conn)
+     public static boolean databaseExists()
     {
         boolean result = false;
         String query = "SHOW DATABASES LIKE '" + Config.getDbNAME() + "'";
-        try (Statement stmt = conn.createStatement()) 
+        try (Statement stmt = Config.getConn().createStatement()) 
         {
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next())
                 result = true;
         }
-        catch (Exception e) 
+        catch (SQLException e) 
         {
             e.printStackTrace();
         }
         return (result);
     }
 
-     public static void create(Connection conn) 
+     public static void create() 
      {
         String stafftable = "CREATE TABLE "+ Config.getDbNAME() + ".staff ("
         +"username VARCHAR(255) NOT NULL, "
@@ -179,13 +164,13 @@ public class ControllerMain {
         String insertSQL = "INSERT INTO staff (username, pass, securityKEY)"
         + "VALUES (?, ?, ?)";
 
-        try (Statement stmt = conn.createStatement()) 
+        try (Statement stmt = Config.getConn().createStatement()) 
         {
             stmt.executeUpdate("CREATE DATABASE "+ Config.getDbNAME()); //Create LibraryManagementSystem Database
             stmt.executeUpdate("USE " + Config.getDbNAME());
             stmt.executeUpdate("DROP TABLE IF EXISTS staff");
             stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
-            PreparedStatement preparedStatement = conn.prepareStatement(insertSQL);
+            PreparedStatement preparedStatement = Config.getConn().prepareStatement(insertSQL);
             preparedStatement.setString(1, "admin");
             preparedStatement.setString(2, "admin");
             preparedStatement.setString(3, "");

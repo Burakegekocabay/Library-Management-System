@@ -22,6 +22,6 @@
          </font>
       </Label>
       <CheckBox fx:id="showPasswordCheckbox" layoutX="121.0" layoutY="310.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="143.0" text="Show Password" />
-      <Hyperlink fx:id="forgotPassword" layoutX="164.0" layoutY="388.0" prefHeight="24.0" prefWidth="123.0" text="Forgot Password ?" />
+      <Hyperlink fx:id="forgotPassword" layoutX="164.0" layoutY="388.0" prefHeight="24.0" prefWidth="123.0" text="Forgot Password ?" onAction="#forgot_password"/>
    </children>
 </AnchorPane>
