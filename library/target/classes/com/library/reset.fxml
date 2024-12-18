@@ -27,13 +27,13 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="area" editable="false" layoutX="45.0" layoutY="282.0" prefHeight="117.0" prefWidth="361.0" text="Please fill in the 'Security Key' field below to verify your identity. Upon completing the change, a new Security Key will be automatically generated for you. Make sure to store this key securely, as you will not be able to reset your password without it." wrapText="true" />
       <PasswordField fx:id="passwordField" layoutX="226.0" layoutY="231.0" prefHeight="26.0" prefWidth="109.0" promptText="New Password" />
       <TextField fx:id="passwordTextField" layoutX="226.0" layoutY="231.0" prefHeight="26.0" prefWidth="109.0" promptText="New Password" />
+      <CheckBox fx:id="showPasswordCheckBox" layoutX="342.0" layoutY="235.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="69.0" text="Show" />
+      <TextArea fx:id="area" editable="false" layoutX="45.0" layoutY="282.0" prefHeight="117.0" prefWidth="361.0" text="Please fill in the 'Security Key' field below to verify your identity. Upon completing the change, a new Security Key will be automatically generated for you. Make sure to store this key securely, as you will not be able to reset your password without it." wrapText="true" />
       <PasswordField fx:id="KeyPasswordField" alignment="TOP_CENTER" layoutX="103.0" layoutY="415.0" prefHeight="26.0" prefWidth="246.0" promptText="SECURITY KEY" />
       <TextField fx:id="KeyTextField" alignment="TOP_CENTER" layoutX="103.0" layoutY="415.0" prefHeight="26.0" prefWidth="246.0" promptText="SECURITY KEY" />
-      <Button fx:id="resetButton" layoutX="177.0" layoutY="486.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="97.0" text="RESET" onAction="#ResetMethod" />
-      <CheckBox fx:id="showPasswordCheckBox" layoutX="342.0" layoutY="235.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="69.0" text="Show" />
       <CheckBox fx:id="showKeyCheckBox" layoutX="185.0" layoutY="448.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Show Key" />
+      <Button fx:id="resetButton" layoutX="177.0" layoutY="486.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="97.0" text="RESET" onAction="#ResetMethod" />
    </children>
 </AnchorPane>
