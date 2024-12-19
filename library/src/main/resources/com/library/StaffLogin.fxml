@@ -17,7 +17,7 @@
       <CheckBox fx:id="showPasswordCheckbox" layoutX="121.0" layoutY="310.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="143.0" text="Show Password" />
       <Button fx:id="member_Login_Button" layoutX="122.0" layoutY="339.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="208.0" text="Login" onAction="#login" />
       <Hyperlink fx:id="forgotPassword" layoutX="164.0" layoutY="388.0" prefHeight="24.0" prefWidth="123.0" text="Forgot Password ?" onAction="#forgot_password"/>
-      <Button fx:id="staff_LoginPage" layoutX="153.0" layoutY="545.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="143.0" text="Member Login" />
+      <Button fx:id="staff_LoginPage" layoutX="153.0" layoutY="545.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="143.0" text="Member Login" onAction="#toMemberLogin" />
       <Label alignment="CENTER" layoutX="49.0" layoutY="125.0" prefHeight="58.0" prefWidth="350.0" text="Staff Login">
          <font>
             <Font size="30.0" />

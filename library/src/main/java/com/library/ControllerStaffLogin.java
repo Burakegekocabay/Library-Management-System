@@ -13,6 +13,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class ControllerStaffLogin
@@ -155,4 +156,20 @@ public class ControllerStaffLogin
             return InjectionPreventer(StaffPasswordfield.getText());
     }
 
+    @FXML
+    void toMemberLogin()
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/main.fxml"));
+        StackPane root2;
+        try 
+        {
+            root2 = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Library Management System");
+            stage.setScene(new Scene(root2));
+            stage.show();
+            Stage currentStage = (Stage) StaffUsername.getScene().getWindow();
+            currentStage.close();
+        } catch (Exception e){e.printStackTrace();}  
+    }
 }
