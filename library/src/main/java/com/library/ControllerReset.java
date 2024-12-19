@@ -53,6 +53,9 @@ public class ControllerReset
     private TextArea area;
 
     @FXML
+    private Button Cancel;
+
+    @FXML
     void initialize() 
     {
         if (passwordTextField != null && passwordField != null)
@@ -243,5 +246,22 @@ public class ControllerReset
         s = s.replace("&","");
         s = s.replace("|","");
         return s;
+    }
+
+    @FXML
+    void CancelMethod()
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffLogin.fxml"));
+        AnchorPane root2;
+        try 
+        {
+            root2 = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Staff Login");
+            stage.setScene(new Scene(root2));
+            stage.show();
+            Stage currentStage = (Stage) resetButton.getScene().getWindow();
+            currentStage.close();
+        } catch (Exception e){}
     }
 }

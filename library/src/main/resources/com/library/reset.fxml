@@ -34,6 +34,7 @@
       <PasswordField fx:id="KeyPasswordField" alignment="TOP_CENTER" layoutX="103.0" layoutY="415.0" prefHeight="26.0" prefWidth="246.0" promptText="SECURITY KEY" />
       <TextField fx:id="KeyTextField" alignment="TOP_CENTER" layoutX="103.0" layoutY="415.0" prefHeight="26.0" prefWidth="246.0" promptText="SECURITY KEY" />
       <CheckBox fx:id="showKeyCheckBox" layoutX="185.0" layoutY="448.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Show Key" />
-      <Button fx:id="resetButton" layoutX="177.0" layoutY="486.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="97.0" text="RESET" onAction="#ResetMethod" />
+      <Button fx:id="resetButton" layoutX="177.0" layoutY="486.0" mnemonicParsing="false" onAction="#ResetMethod" prefHeight="26.0" prefWidth="97.0" text="RESET" />
+      <Button fx:id="Cancel" layoutX="177.0" layoutY="546.0" mnemonicParsing="false" onAction="#CancelMethod" prefHeight="26.0" prefWidth="97.0" text="Cancel" />
    </children>
 </AnchorPane>
