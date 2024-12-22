@@ -6,15 +6,13 @@ public class Members
     private String Name;
     private String Mail;
     private String Phone;
-    private String Status;
 
-    public Members (String ID, String Name, String Mail, String Phone, String Status)
+    public Members (String ID, String Name, String Mail, String Phone)
     {
         this.ID = ID;
         this.Name = Name;
         this.Mail = Mail;
         this.Phone = Phone;
-        this.Status = Status;
     }
 
     public String getID() {
@@ -33,7 +31,4 @@ public class Members
         return Phone;
     }
 
-    public String getStatus() {
-        return Status;
-    }
 }

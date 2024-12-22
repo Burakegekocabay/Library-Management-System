@@ -5,9 +5,12 @@ import java.sql.ResultSet;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ControllerMemberManagement
@@ -25,8 +28,18 @@ public class ControllerMemberManagement
     private TableColumn<Members, String> Mail;  
     @FXML
     private TableColumn<Members, String> Phone;  
+
+
     @FXML
-    private TableColumn<Members, String> Status;  
+    private TextField searchID;
+    @FXML
+    private TextField searchName;
+    @FXML
+    private TextField searchMail;
+    @FXML
+    private TextField searchPhone;
+    @FXML
+    private Button searchButton;
 
 
     @FXML
@@ -36,13 +49,12 @@ public class ControllerMemberManagement
         Name.setCellValueFactory(new PropertyValueFactory<>("Name"));
         Mail.setCellValueFactory(new PropertyValueFactory<>("Mail"));
         Phone.setCellValueFactory(new PropertyValueFactory<>("Phone"));
-        Status.setCellValueFactory(new PropertyValueFactory<>("Status"));
         getUsersDB();
     }
 
     void getUsersDB()
     {
-        String sql = "SELECT ID, Name, Mail, Phone, Status FROM users";
+        String sql = "SELECT ID, Name, Mail, Phone FROM users";
         try
         {
             Config.getConn().createStatement().executeUpdate("USE "+Config.getDbNAME());
@@ -55,8 +67,7 @@ public class ControllerMemberManagement
                 String Name = resultSet.getString("Name");
                 String Mail = resultSet.getString("Mail");
                 String Phone = resultSet.getString("Phone");
-                String Status = resultSet.getString("Status");
-                userList.add(new Members(id, Name, Mail, Phone, Status));
+                userList.add(new Members(id, Name, Mail, Phone));
             }
             statement.close();
 
@@ -65,4 +76,19 @@ public class ControllerMemberManagement
         } catch (Exception e) {e.printStackTrace();}
     }
 
+    @FXML
+    public void search() {
+        FilteredList<Members> filteredData = new FilteredList<>(userList, p -> true);
+
+        filteredData.setPredicate(Members -> {
+            boolean matchesID = searchID.getText().isEmpty() || Members.getID().contains(searchID.getText());
+            boolean matchesName = searchName.getText().isEmpty() || Members.getName().contains(searchName.getText());
+            boolean matchesMail = searchMail.getText().isEmpty() || Members.getMail().contains(searchMail.getText());
+            boolean matchesPhone = searchPhone.getText().isEmpty() || Members.getPhone().contains(searchPhone.getText());
+            return matchesID && matchesName && matchesMail && matchesPhone;
+        });
+
+        tableView.setItems(filteredData);
+        tableView.refresh();
+    }
 }
