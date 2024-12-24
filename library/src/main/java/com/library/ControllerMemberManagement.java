@@ -7,11 +7,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class ControllerMemberManagement
 {
@@ -40,11 +45,13 @@ public class ControllerMemberManagement
     private TextField searchPhone;
     @FXML
     private Button searchButton;
-
+    @FXML
+    private Button editButton;
 
     @FXML
     void initialize()
     {
+        // Initialize the table columns
         ID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         Name.setCellValueFactory(new PropertyValueFactory<>("Name"));
         Mail.setCellValueFactory(new PropertyValueFactory<>("Mail"));
@@ -52,7 +59,7 @@ public class ControllerMemberManagement
         getUsersDB();
     }
 
-    void getUsersDB()
+    void getUsersDB() // get user data from database
     {
         String sql = "SELECT ID, Name, Mail, Phone FROM users";
         try
@@ -67,17 +74,17 @@ public class ControllerMemberManagement
                 String Name = resultSet.getString("Name");
                 String Mail = resultSet.getString("Mail");
                 String Phone = resultSet.getString("Phone");
-                userList.add(new Members(id, Name, Mail, Phone));
+                userList.add(new Members(id, Name, Mail, Phone)); // add user to list
             }
             statement.close();
 
-            tableView.setItems(userList);
+            tableView.setItems(userList); 
             tableView.refresh();
         } catch (Exception e) {e.printStackTrace();}
     }
 
     @FXML
-    public void search() {
+    public void search() { // Filter user by ID, Name, Mail, Phone in tableView 
         FilteredList<Members> filteredData = new FilteredList<>(userList, p -> true);
 
         filteredData.setPredicate(Members -> {
@@ -90,5 +97,43 @@ public class ControllerMemberManagement
 
         tableView.setItems(filteredData);
         tableView.refresh();
+    }
+
+    @FXML
+    void updateUser() // Update user data in database
+    {
+        if(tableView.getSelectionModel().getSelectedItem() != null)
+        {
+            Members member = tableView.getSelectionModel().getSelectedItem();
+            /* */
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffUpdateMember.fxml"));
+            StackPane root2;
+            try 
+            {
+                root2 = loader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Update Member");
+                ControllerUpdateMember controller = loader.getController(); // get controller 
+                controller.setMember(member,this::updateTable); // Pass the selected member and the method to update the table
+                stage.setScene(new Scene(root2));
+                stage.show();
+            } catch (Exception e){}
+
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Please select a user to update.");
+            alert.showAndWait();
+        }
+    }
+
+    void updateTable()
+    {
+        userList.clear();
+        tableView.refresh();
+        getUsersDB();
     }
 }
