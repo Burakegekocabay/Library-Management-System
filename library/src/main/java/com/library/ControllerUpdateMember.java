@@ -42,7 +42,7 @@ public class ControllerUpdateMember
     @FXML
     private void updateUser() 
     {
-        String sql = "UPDATE users SET Password = ?, Name = ?, Mail = ?, Phone = ? WHERE ID = ?";
+        String sql = "UPDATE members SET Password = ?, Name = ?, Mail = ?, Phone = ? WHERE ID = ?";
         String updatedID = ID.getText();
         String updatedPassword = Password.getText();
         String updatedName = Name.getText();
@@ -67,7 +67,7 @@ public class ControllerUpdateMember
     @FXML
     private void deleteUser()
     {
-        String sql = "DELETE FROM users WHERE ID = ?";
+        String sql = "DELETE FROM members WHERE ID = ?";
         try
         {
             Config.getConn().createStatement().executeUpdate("USE "+Config.getDbNAME());
@@ -82,7 +82,7 @@ public class ControllerUpdateMember
     String getPass(String ID) // returns the password of the user with the given ID from the database
     {
         String currentPassword = null;
-        String sql = "SELECT Password FROM users WHERE ID = ?";
+        String sql = "SELECT Password FROM members WHERE ID = ?";
         try 
         {
             Config.getConn().createStatement().executeUpdate("USE "+Config.getDbNAME());
