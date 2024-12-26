@@ -2,21 +2,15 @@ package com.library;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import java.util.UUID;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
@@ -114,23 +108,8 @@ public class ControllerReset
         }
     }
 
-    boolean isFirstLogin() //Checking if it's the first login
-    {
-        String query = "SELECT securityKEY FROM staff WHERE securityKEY IS NULL LIMIT 1";
-
-        try (PreparedStatement stmt = Config.getConn().prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-                return(rs.next());
-            
-        } catch (SQLException e) {
-            
-        }
-        return false;
-    }
-
     void FirstloginInitialize() {
-        if (isFirstLogin()) {
+        if (Config.isFirstLogin()) {
             resetButton.setText("CREATE");
             label.setText("CREATE PASSWORD");
             area.setText("Leave the 'Security Key' field blank. A Security Key will be generated for you automatically. Make sure to store this key securely, as you will not be able to reset your password without it.");
@@ -141,12 +120,6 @@ public class ControllerReset
             KeyPasswordField.setDisable(true);
             showKeyCheckBox.setDisable(true);
         }
-    }
-
-
-    String makeKEY() //Generates a key from UUID
-    {
-        return (UUID.randomUUID().toString().replace("-", "").substring(0,20).toUpperCase());
     }
 
     @FXML
@@ -175,7 +148,7 @@ public class ControllerReset
                     {
                         String key = rs.getString("securityKEY");
                         //Controlling if key in database is equal to the one in the field
-                        if (!(InjectionPreventer(KeyPasswordField.getText()).equals(key) || InjectionPreventer(KeyTextField.getText()).equals(key)))
+                        if (!(Utils.InjectionPreventer(KeyPasswordField.getText()).equals(key) || Utils.InjectionPreventer(KeyTextField.getText()).equals(key)))
                         {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error");
@@ -186,28 +159,19 @@ public class ControllerReset
                         }
                     }
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {e.printStackTrace();}
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Security Key");
         alert.setHeaderText(null);
-        String key = makeKEY();
+        String key = Utils.makeKEY();
         alert.setContentText("MAKE SURE TO STORE THIS KEY SECURELY \n "+ key);
         alert.showAndWait();
         updateDetails(key);
         key = null;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffMainPage.fxml"));
-        AnchorPane root2;
-        try 
-        {
-            root2 = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Staff Main Page");
-            stage.setScene(new Scene(root2));
-            stage.show();
-            Stage currentStage = (Stage) resetButton.getScene().getWindow();
-            currentStage.close();
-        } catch (Exception e){}
+
+        Stage currentStage = (Stage) resetButton.getScene().getWindow();
+        Utils.redirect(currentStage,"/com/library/StaffMainPage.fxml","Staff Dashboard");
     }
 
     void updateDetails(String key) //updating username pass and key
@@ -217,12 +181,12 @@ public class ControllerReset
         {
             PreparedStatement stmt = Config.getConn().prepareStatement(updateQuery);
 
-            stmt.setString(1, InjectionPreventer(UsernameField.getText()));
+            stmt.setString(1, Utils.InjectionPreventer(UsernameField.getText()));
 
             if (showPasswordCheckBox.isSelected())
-                stmt.setString(2, InjectionPreventer(passwordTextField.getText()));
+                stmt.setString(2, Utils.InjectionPreventer(passwordTextField.getText()));
             else
-                stmt.setString(2, InjectionPreventer(passwordField.getText()));
+                stmt.setString(2, Utils.InjectionPreventer(passwordField.getText()));
 
             stmt.setString(3, key);
             stmt.executeUpdate();
@@ -232,36 +196,10 @@ public class ControllerReset
             
     }
 
-    String InjectionPreventer(String s)
-    {
-        /*
-         * This method sanitizes the input string to prevent SQL injection attacks
-         * by deleting potentially dangerous characters like '?', '=', '$', '%', '&' and '|'
-        */
-
-        s = s.replace("?","");
-        s = s.replace("=","");
-        s = s.replace("$","");
-        s = s.replace("%","");
-        s = s.replace("&","");
-        s = s.replace("|","");
-        return s;
-    }
-
     @FXML
     void CancelMethod()
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffLogin.fxml"));
-        AnchorPane root2;
-        try 
-        {
-            root2 = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Staff Login");
-            stage.setScene(new Scene(root2));
-            stage.show();
-            Stage currentStage = (Stage) resetButton.getScene().getWindow();
-            currentStage.close();
-        } catch (Exception e){}
+        Stage currentStage = (Stage) resetButton.getScene().getWindow();
+        Utils.redirect(currentStage,"/com/library/StaffLogin.fxml","Staff Login");
     }
 }

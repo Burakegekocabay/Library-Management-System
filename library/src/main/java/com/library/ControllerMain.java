@@ -1,16 +1,7 @@
 package com.library;
 
-import java.sql.Statement;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -83,106 +74,21 @@ public class ControllerMain {
      @FXML
      void toStaffLoginPage()
      {
-          try
-          {
-               if (!databaseExists())
-               {
-                    create();
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reset.fxml"));
-                    AnchorPane root2 = loader.load();
-                    Stage stage = new Stage();
-                    stage.setTitle("Create Password");
-                    stage.setScene(new Scene(root2));
-                    stage.show();
-    
-                    Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
-                    currentStage.close();
-                    return ;
-               }
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffLogin.fxml"));
-               AnchorPane root2 = loader.load();
-               Stage stage = new Stage();
-               stage.setTitle("Staff Login Page");
-               stage.setScene(new Scene(root2));
-               stage.show();
-               Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
-               currentStage.close();
-          }
-            catch(IOException e)
-            {
-                e.printStackTrace();
-            }
+        Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
+        if (!Config.databaseExists())
+        {
+             Config.create_DB();
+             Utils.redirect(currentStage, "/com/library/reset.fxml", "Create Password");
+             return ;
+        }
+        Utils.redirect(currentStage, "/com/library/StaffLogin.fxml", " Staff Login"); 
      }
 
      @FXML
      void toMemberMainPage()
      {
-          try
-          {
-               // Validation operation will be here
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/MemberMainPage.fxml"));
-               AnchorPane root2 = loader.load();
-               Stage stage = new Stage();
-               stage.setTitle("Member Main Page");
-               stage.setScene(new Scene(root2));
-               stage.show();
-
-               Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
-               currentStage.close();
-          }
-          catch(IOException e)
-          {
-            e.printStackTrace();
-          }
+        Stage currentStage = (Stage) staffLoginPageButton.getScene().getWindow();
+        Utils.redirect(currentStage,"/com/library/MemberMainPage.fxml"," Library Management System");
      }
-
-
-     public static boolean databaseExists()
-    {
-        boolean result = false;
-        String query = "SHOW DATABASES LIKE '" + Config.getDbNAME() + "'";
-        try (Statement stmt = Config.getConn().createStatement()) 
-        {
-            ResultSet rs = stmt.executeQuery(query);
-            if (rs.next())
-                result = true;
-        }
-        catch (SQLException e) 
-        {
-            e.printStackTrace();
-        }
-        return (result);
-    }
-
-     public static void create() 
-     {
-        String stafftable = "CREATE TABLE "+ Config.getDbNAME() + ".staff ("
-        +"username VARCHAR(255) NOT NULL, "
-        +"pass VARCHAR(255) NOT NULL, " 
-        +"securityKEY VARCHAR(255) NOT NULL)";
-
-        String insertSQL = "INSERT INTO staff (username, pass, securityKEY)"
-        + "VALUES (?, ?, ?)";
-
-        try (Statement stmt = Config.getConn().createStatement()) 
-        {
-            stmt.executeUpdate("CREATE DATABASE "+ Config.getDbNAME()); //Create LibraryManagementSystem Database
-            stmt.executeUpdate("USE " + Config.getDbNAME());
-            stmt.executeUpdate("DROP TABLE IF EXISTS staff");
-            stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
-            PreparedStatement preparedStatement = Config.getConn().prepareStatement(insertSQL);
-            preparedStatement.setString(1, "admin");
-            preparedStatement.setString(2, "admin");
-            preparedStatement.setString(3, "");
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("MYSQL Server");
-        alert.setContentText("Database Created");
-        alert.showAndWait();
-    }
-
   
 }

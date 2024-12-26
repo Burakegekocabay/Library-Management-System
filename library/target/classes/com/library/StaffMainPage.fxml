@@ -4,8 +4,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerStaffMainPage">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerStaffMainPage">
+   <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" >
    <children>
       <ImageView fx:id="borrowingSystemImageView" fitHeight="135.0" fitWidth="140.0" layoutX="85.0" layoutY="165.0" onMouseClicked="#toBorrowing" pickOnBounds="true" preserveRatio="true">
       <image>
@@ -30,3 +33,5 @@
       <Button fx:id="logOutButton" layoutX="191.0" layoutY="558.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="66.0" text="Log out" />
    </children>
 </AnchorPane>
+</children>
+</StackPane>

@@ -2,7 +2,10 @@ package com.library;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javafx.scene.control.Alert;
 
@@ -53,5 +56,67 @@ public class Config
 
     public static Connection getConn() {
         return conn;
+    }
+
+    public static boolean databaseExists()
+    {
+        boolean result = false;
+        String query = "SHOW DATABASES LIKE '" + Config.getDbNAME() + "'";
+        try (Statement stmt = Config.getConn().createStatement()) 
+        {
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next())
+                result = true;
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return (result);
+    }
+
+    public static void create_DB()
+    {
+        String stafftable = "CREATE TABLE "+ Config.getDbNAME() + ".staff ("
+        +"username VARCHAR(255) NOT NULL, "
+        +"pass VARCHAR(255) NOT NULL, " 
+        +"securityKEY VARCHAR(255) NOT NULL)";
+
+        String insertSQL = "INSERT INTO staff (username, pass, securityKEY)"
+        + "VALUES (?, ?, ?)";
+
+        try (Statement stmt = Config.getConn().createStatement()) 
+        {
+            stmt.executeUpdate("CREATE DATABASE "+ Config.getDbNAME()); //Create LibraryManagementSystem Database
+            stmt.executeUpdate("USE " + Config.getDbNAME());
+            stmt.executeUpdate("DROP TABLE IF EXISTS staff");
+            stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
+            PreparedStatement preparedStatement = Config.getConn().prepareStatement(insertSQL);
+            preparedStatement.setString(1, "admin");
+            preparedStatement.setString(2, "admin");
+            preparedStatement.setString(3, "");
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("MYSQL Server");
+        alert.setContentText("Database Created");
+        alert.showAndWait();
+    }
+
+    public static boolean isFirstLogin() //Checking if it's the first login
+    {
+        String query = "SELECT securityKEY FROM staff WHERE securityKEY IS NULL LIMIT 1";
+
+        try
+        {
+            Config.getConn().createStatement().executeUpdate("USE LibraryManagementSystem");
+            PreparedStatement stmt = Config.getConn().prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            return(rs.next());
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
