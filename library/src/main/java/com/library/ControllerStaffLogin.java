@@ -4,16 +4,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class ControllerStaffLogin
@@ -74,17 +71,8 @@ public class ControllerStaffLogin
     @FXML
     void forgot_password()
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/reset.fxml"));
-        AnchorPane root2;
-        try {
-            root2 = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Forgot Password");
-            stage.setScene(new Scene(root2));
-            stage.show();
-            Stage currentStage = (Stage) forgotPassword.getScene().getWindow();
-            currentStage.close();
-        } catch (Exception e) {}
+        Stage currentStage = (Stage) forgotPassword.getScene().getWindow();
+        Utils.redirect(currentStage, "/com/library/reset.fxml","Forgot Password" );
     }
 
     @FXML
@@ -98,7 +86,7 @@ public class ControllerStaffLogin
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) 
             {
-                if (!((rs.getString("username").equals(InjectionPreventer(StaffUsername.getText())))) || (!(rs.getString("pass").equals(getStaffPassword()))))
+                if (!((rs.getString("username").equals(Utils.InjectionPreventer(StaffUsername.getText())))) || (!(rs.getString("pass").equals(getStaffPassword()))))
                 {
                     //If the username or password are not correct, display an error message
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -109,39 +97,13 @@ public class ControllerStaffLogin
                     return ;
                 }
                 //If the username and password are correct, redirect to the staff dashboard
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffMainPage.fxml"));
-                AnchorPane root2;
-                try 
-                {
-                    root2 = loader.load();
-                    Stage stage = new Stage();
-                    stage.setTitle("Staff Main Page");
-                    stage.setScene(new Scene(root2));
-                    stage.show();
-                    Stage currentStage = (Stage) StaffUsername.getScene().getWindow();
-                    currentStage.close();
-                } catch (Exception e){}
-
+                Stage currentStage = (Stage) StaffUsername.getScene().getWindow();
+                Utils.redirect(currentStage, "/com/library/StaffMainPage.fxml", "Staff Dashboard");
             }
         } 
         catch (Exception e){ e.printStackTrace(); }
     }
 
-    String InjectionPreventer(String s)
-    {
-        /*
-         * This method sanitizes the input string to prevent SQL injection attacks
-         * by deleting potentially dangerous characters like '?', '=', '$', '%', '&' and '|'
-        */
-
-        s = s.replace("?","");
-        s = s.replace("=","");
-        s = s.replace("$","");
-        s = s.replace("%","");
-        s = s.replace("&","");
-        s = s.replace("|","");
-        return s;
-    }
 
 
     String getStaffPassword()
@@ -150,26 +112,16 @@ public class ControllerStaffLogin
 
         if (showPasswordCheckbox.isSelected())
         {
-            return InjectionPreventer(StaffTextfield.getText());    
+            return Utils.InjectionPreventer(StaffTextfield.getText());    
         }
         else
-            return InjectionPreventer(StaffPasswordfield.getText());
+            return Utils.InjectionPreventer(StaffPasswordfield.getText());
     }
 
     @FXML
     void toMemberLogin()
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/main.fxml"));
-        StackPane root2;
-        try 
-        {
-            root2 = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Library Management System");
-            stage.setScene(new Scene(root2));
-            stage.show();
-            Stage currentStage = (Stage) StaffUsername.getScene().getWindow();
-            currentStage.close();
-        } catch (Exception e){e.printStackTrace();}  
+        Stage currentStage = (Stage) StaffUsername.getScene().getWindow();
+        Utils.redirect(currentStage,"/com/library/main.fxml" , "Library Management System");
     }
 }

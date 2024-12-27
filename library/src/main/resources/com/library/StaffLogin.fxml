@@ -7,9 +7,12 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerStaffLogin">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerStaffLogin">
+   <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0">
    <children>
       <TextField fx:id="StaffUsername" layoutX="121.0" layoutY="211.0" prefHeight="38.0" prefWidth="208.0" promptText="Staff Username" />
       <PasswordField fx:id="StaffPasswordfield" layoutX="121.0" layoutY="261.0" prefHeight="38.0" prefWidth="208.0" promptText="Password" />
@@ -25,3 +28,5 @@
       </Label>
    </children>
 </AnchorPane>
+</children>
+</StackPane>

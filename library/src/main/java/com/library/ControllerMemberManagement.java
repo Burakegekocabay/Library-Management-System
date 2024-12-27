@@ -47,6 +47,8 @@ public class ControllerMemberManagement
     private Button searchButton;
     @FXML
     private Button editButton;
+    @FXML
+    private Button AddButton;
 
     @FXML
     void initialize()
@@ -61,7 +63,7 @@ public class ControllerMemberManagement
 
     void getUsersDB() // get user data from database
     {
-        String sql = "SELECT ID, Name, Mail, Phone FROM users";
+        String sql = "SELECT ID, Name, Mail, Phone FROM members";
         try
         {
             Config.getConn().createStatement().executeUpdate("USE "+Config.getDbNAME());
@@ -135,5 +137,23 @@ public class ControllerMemberManagement
         userList.clear();
         tableView.refresh();
         getUsersDB();
+    }
+
+    @FXML
+    void addMember()
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/StaffAddMember.fxml"));
+        StackPane root2;
+        try
+        {
+            root2 = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Add Member");
+            ControllerAddMember controller = loader.getController(); // get controller 
+            controller.setController(this::updateTable); // Pass the selected member and the method to update the table
+            stage.setScene(new Scene(root2));
+            stage.show();
+        }
+        catch (Exception e){e.printStackTrace();}
     }
 }

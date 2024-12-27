@@ -24,7 +24,8 @@
                   <TableColumn fx:id="Phone" prefWidth="116.0" text="Phone" />
               </columns>
             </TableView>
-            <Button fx:id="editButton" layoutX="14.0" layoutY="291.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" text="Edit Selected User" onAction="#updateUser"/>
+            <Button fx:id="editButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="26.0" prefWidth="155.0" text="Edit Selected Member" />
+            <Button fx:id="addButton" layoutX="555.0" layoutY="291.0" mnemonicParsing="false" onAction="#addMember" prefHeight="26.0" prefWidth="131.0" text="Add New Member" />
          </children>
          </AnchorPane>
    </children>
