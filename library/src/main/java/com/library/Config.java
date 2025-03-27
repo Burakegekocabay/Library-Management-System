@@ -83,7 +83,7 @@ public class Config
         +"securityKEY VARCHAR(255) NOT NULL)";
 
         String members = "CREATE TABLE "+ Config.getDbNAME() + ".members ("
-        +"ID INT NOT NULL,"
+        +"ID VARCHAR(255) NOT NULL,"
         +"name VARCHAR(255) NOT NULL, "
         +"mail VARCHAR(255) NOT NULL, " 
         +"phone VARCHAR(255) NOT NULL,"

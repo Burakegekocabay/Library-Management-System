@@ -47,7 +47,17 @@ public class ControllerAddMember
             alert.setContentText("Please fill in all fields");
             alert.showAndWait();
             return ;
-        }   
+        }
+
+        if (controlID(ID.getText()) == false)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("ID already exists");
+            alert.showAndWait();
+            return ;
+        }
         try 
         {
             PreparedStatement statement = Config.getConn().prepareStatement(sql);
@@ -69,5 +79,16 @@ public class ControllerAddMember
         updateTableCallback.run(); // updates the table in the main window
         Stage currentStage = (Stage) addButton.getScene().getWindow();
         currentStage.close();
+    }
+
+    private boolean controlID(String ID)
+    {
+        try {
+            PreparedStatement statement = Config.getConn().prepareStatement("SELECT * FROM members WHERE ID = ?");
+            statement.setString(1, ID);
+            return !statement.executeQuery().next();
+            }
+        catch (Exception e) {e.printStackTrace();}
+        return false;
     }
 }
