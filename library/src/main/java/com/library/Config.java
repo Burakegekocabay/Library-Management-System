@@ -77,34 +77,43 @@ public class Config
 
     public static void create_DB()
     {
-        String stafftable = "CREATE TABLE "+ Config.getDbNAME() + ".staff ("
+        String staff_table = "CREATE TABLE "+ Config.getDbNAME() + ".staff ("
         +"username VARCHAR(255) NOT NULL, "
         +"pass VARCHAR(255) NOT NULL, " 
         +"securityKEY VARCHAR(255) NOT NULL)";
 
-        String members = "CREATE TABLE "+ Config.getDbNAME() + ".members ("
-        +"ID VARCHAR(255) NOT NULL,"
+        
+        String insertSQL = "INSERT INTO staff (username, pass, securityKEY)"
+        + "VALUES (?, ?, ?)";
+        
+        String members_table = "CREATE TABLE "+ Config.getDbNAME() + ".members ("
+        +"ID VARCHAR(255) NOT NULL," 
         +"name VARCHAR(255) NOT NULL, "
         +"mail VARCHAR(255) NOT NULL, " 
         +"phone VARCHAR(255) NOT NULL,"
         +"password VARCHAR(255) NOT NULL,"
-        +"books_left INT NOT NULL DEFAULT 3)";
+        +"books_left INT NOT NULL DEFAULT 3)"; //Maximum 3 books can be borrowed by a member at a time.
 
-        String insertSQL = "INSERT INTO staff (username, pass, securityKEY)"
-        + "VALUES (?, ?, ?)";
+        String books_table = "CREATE TABLE "+ Config.getDbNAME() + ".books ("
+        +"ID VARCHAR(255) NOT NULL," 
+        +"title VARCHAR(255) NOT NULL, "
+        +"author VARCHAR(255) NOT NULL, "
+        +"genre VARCHAR(255) NOT NULL, "
+        +"status BOOLEAN NOT NULL DEFAULT TRUE)"; //TRUE = Available, FALSE = Not Available
 
         try (Statement stmt = Config.getConn().createStatement()) 
         {
             stmt.executeUpdate("CREATE DATABASE "+ Config.getDbNAME()); //Create LibraryManagementSystem Database
             stmt.executeUpdate("USE " + Config.getDbNAME());
             stmt.executeUpdate("DROP TABLE IF EXISTS staff");
-            stmt.executeUpdate(stafftable); //Crate LibraryManagementSystem.staff table
+            stmt.executeUpdate(staff_table); //Crate LibraryManagementSystem.staff table
             PreparedStatement preparedStatement = Config.getConn().prepareStatement(insertSQL);
             preparedStatement.setString(1, "admin");
             preparedStatement.setString(2, "admin");
             preparedStatement.setString(3, "");
             preparedStatement.executeUpdate();
-            stmt.executeUpdate(members); //Create LibraryManagementSystem.members table
+            stmt.executeUpdate(members_table); //Create LibraryManagementSystem.members table
+            stmt.executeUpdate(books_table); //Create LibraryManagementSystem.books table
         } catch (SQLException e) {e.printStackTrace();}
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("MYSQL Server");
