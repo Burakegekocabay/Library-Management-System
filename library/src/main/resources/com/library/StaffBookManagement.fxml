@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerBookManagement">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <TableView fx:id="tableView" layoutX="17.0" layoutY="63.0" prefHeight="203.0" prefWidth="567.0">
+            <columns>
+                <TableColumn fx:id="ID" prefWidth="68.00002861022949" text="ID" />
+                <TableColumn fx:id="title" prefWidth="200.79999542236328" text="Title" />
+                <TableColumn fx:id="author" prefWidth="124.800048828125" text="Author" />
+                <TableColumn fx:id="genre" prefWidth="84.800048828125" text="Genre" />
+                <TableColumn fx:id="status" prefWidth="81.5999755859375" text="Status" />
+            </columns>
+            </TableView>
+
+        <TextField fx:id="searchID" layoutX="14.0" layoutY="22.0" prefHeight="16.0" prefWidth="85.0" promptText="Search by ID" />
+        <TextField fx:id="searchTitle" layoutX="118.0" layoutY="22.0" prefHeight="16.0" prefWidth="101.0" promptText="Search by Title" />
+        <TextField fx:id="searchAuthor" layoutX="240.0" layoutY="22.0" prefHeight="16.0" prefWidth="118.0" promptText="Search by Author" />
+        <TextField fx:id="searchGenre" layoutX="381.0" layoutY="22.0" prefHeight="16.0" prefWidth="111.0" promptText="Search by Genre" />
+
+        <Button fx:id="searchButton" layoutX="537.0" layoutY="21.0" onAction="#search" text="Search" />
+        <Button fx:id="editButton" layoutX="25.0" layoutY="287.0" onAction="#updateBook" text="Edit Book" />
+        <Button fx:id="addButton" layoutX="520.0" layoutY="287.0" onAction="#addBook" text="Add Book" />
+         </children>
+      </AnchorPane>
    </children>
 </StackPane>
