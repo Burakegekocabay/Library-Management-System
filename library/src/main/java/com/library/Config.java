@@ -82,6 +82,14 @@ public class Config
         +"pass VARCHAR(255) NOT NULL, " 
         +"securityKEY VARCHAR(255) NOT NULL)";
 
+        String members = "CREATE TABLE "+ Config.getDbNAME() + ".members ("
+        +"ID INT NOT NULL,"
+        +"name VARCHAR(255) NOT NULL, "
+        +"mail VARCHAR(255) NOT NULL, " 
+        +"phone VARCHAR(255) NOT NULL,"
+        +"password VARCHAR(255) NOT NULL,"
+        +"books_left INT NOT NULL DEFAULT 3)";
+
         String insertSQL = "INSERT INTO staff (username, pass, securityKEY)"
         + "VALUES (?, ?, ?)";
 
@@ -96,6 +104,7 @@ public class Config
             preparedStatement.setString(2, "admin");
             preparedStatement.setString(3, "");
             preparedStatement.executeUpdate();
+            stmt.executeUpdate(members); //Create LibraryManagementSystem.members table
         } catch (SQLException e) {e.printStackTrace();}
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("MYSQL Server");
