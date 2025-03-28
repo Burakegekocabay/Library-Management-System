@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMemberManagement">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMemberManagement">
    <children>
       <AnchorPane prefHeight="500.0" prefWidth="700.0">
          <children>
@@ -26,6 +26,7 @@
             </TableView>
             <Button fx:id="editButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="26.0" prefWidth="155.0" text="Edit Selected Member" />
             <Button fx:id="addButton" layoutX="555.0" layoutY="291.0" mnemonicParsing="false" onAction="#addMember" prefHeight="26.0" prefWidth="131.0" text="Add New Member" />
+            <Button fx:id="mainMenuButton" layoutX="309.0" layoutY="444.0" mnemonicParsing="false" onAction="#toMainMenu" prefHeight="26.0" prefWidth="82.0" text="Main Menu" />
          </children>
          </AnchorPane>
    </children>

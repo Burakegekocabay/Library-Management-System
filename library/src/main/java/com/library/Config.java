@@ -101,6 +101,16 @@ public class Config
         +"genre VARCHAR(255) NOT NULL, "
         +"status BOOLEAN NOT NULL DEFAULT TRUE)"; //TRUE = Available, FALSE = Not Available
 
+        String borrowing_table = "CREATE TABLE "+ Config.getDbNAME() + ".borrowings ("
+        +"book_id VARCHAR(255) NOT NULL," 
+        +"book_title VARCHAR(255) NOT NULL, "
+        +"member_id VARCHAR(255) NOT NULL, "
+        +"member_name VARCHAR(255) NOT NULL, "
+        +"borrow_date DATE NOT NULL, "
+        +"due_date DATE NOT NULL,"
+        +"return_date VARCHAR(255) NOT NULL DEFAULT '-' ,"
+        +"status VARCHAR(255) NOT NULL DEFAULT 'Borrowed')"; //Borrowed, Returned
+
         try (Statement stmt = Config.getConn().createStatement()) 
         {
             stmt.executeUpdate("CREATE DATABASE "+ Config.getDbNAME()); //Create LibraryManagementSystem Database
@@ -114,6 +124,7 @@ public class Config
             preparedStatement.executeUpdate();
             stmt.executeUpdate(members_table); //Create LibraryManagementSystem.members table
             stmt.executeUpdate(books_table); //Create LibraryManagementSystem.books table
+            stmt.executeUpdate(borrowing_table); //Create LibraryManagementSystem.borrowings table
         } catch (SQLException e) {e.printStackTrace();}
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("MYSQL Server");

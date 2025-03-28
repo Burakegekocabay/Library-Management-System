@@ -50,6 +50,8 @@ public class ControllerBookManagement {
     private Button editButton;
     @FXML
     private Button addButton;
+    @FXML
+    private Button mainMenuButton;
 
     @FXML
     void initialize() {
@@ -153,5 +155,11 @@ public class ControllerBookManagement {
             stage.show();
         }
         catch (Exception e){e.printStackTrace();}
+    }
+
+    @FXML
+    void toMainMenu() {
+        Stage currentStage = (Stage) mainMenuButton.getScene().getWindow();
+        Utils.redirect(currentStage,"/com/library/StaffMainPage.fxml"," Library Management System");
     }
 }

@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerBorrowingSystem">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane prefHeight="449.0" prefWidth="648.0">
+         <children>
+            <!-- Text Fields -->
+            <TextField fx:id="bookID" layoutX="9.0" layoutY="29.0" prefHeight="26.0" prefWidth="142.0" promptText="Search by Book ID" />
+            <TextField fx:id="bookTitle" layoutX="168.0" layoutY="29.0" prefHeight="26.0" prefWidth="131.0" promptText="Search by Book Title" />
+            <TextField fx:id="memberID" layoutX="327.0" layoutY="29.0" prefHeight="26.0" prefWidth="155.0" promptText="Search by Member ID" />
+            <TextField fx:id="memberName" layoutX="513.0" layoutY="29.0" prefHeight="26.0" prefWidth="150.0" promptText="Search by Member Name" />
+            <TextField fx:id="borrowDate" layoutX="10.0" layoutY="79.0" prefHeight="26.0" prefWidth="141.0" promptText="Search by Borrow Date" />
+            <TextField fx:id="dueDate" layoutX="169.0" layoutY="79.0" prefHeight="26.0" prefWidth="131.0" promptText="Search by Due Date" />
+            <TextField fx:id="returnDate" layoutX="327.0" layoutY="79.0" prefHeight="26.0" prefWidth="155.0" promptText="Search by Return Date" />
+            <TextField fx:id="status" layoutX="513.0" layoutY="79.0" prefHeight="26.0" prefWidth="131.0" promptText="Search by Status" />
+
+            <!-- Search Button -->
+            <Button fx:id="searchButton" layoutX="702.0" layoutY="55.0" mnemonicParsing="false" onAction="#search" prefHeight="35.0" prefWidth="82.0" text="Search" />
+
+            <!-- TableView -->
+            <TableView fx:id="tableView" layoutX="10.0" layoutY="160.0" prefHeight="290.0" prefWidth="878.0">
+               <columns>
+                  <TableColumn fx:id="bookIDColumn" prefWidth="73.60000419616699" text="Book ID" />
+                  <TableColumn fx:id="bookTitleColumn" prefWidth="173.60004425048828" text="Book Title" />
+                  <TableColumn fx:id="memberIDColumn" prefWidth="91.20001220703125" text="Member ID" />
+                  <TableColumn fx:id="memberNameColumn" prefWidth="176.0" text="Member Name" />
+                  <TableColumn fx:id="borrowDateColumn" prefWidth="92.0" text="Borrow Date" />
+                  <TableColumn fx:id="dueDateColumn" minWidth="0.0" prefWidth="87.20001220703125" text="Due Date" />
+                  <TableColumn fx:id="returnDateColumn" prefWidth="87.20001220703125" text="Return Date" />
+                  <TableColumn fx:id="statusColumn" prefWidth="90.4000244140625" text="Status" />
+               </columns>
+            </TableView>
+
+            <!-- Buttons -->
+            <Button fx:id="editButton" layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#updateBorrowRecord" prefHeight="26.0" prefWidth="155.0" text="Edit Selected Borrow Record" />
+            <Button fx:id="addButton" layoutX="744.0" layoutY="461.0" mnemonicParsing="false" onAction="#addBorrowRecord" prefHeight="26.0" prefWidth="131.0" text="Add New Borrow Record" />
+            <Button fx:id="mainMenuButton" layoutX="415.0" layoutY="521.0" mnemonicParsing="false" onAction="#toMainMenu" prefHeight="26.0" prefWidth="82.0" text="Main Menu" />
+            <Text fill="#f20303" layoutX="14.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="* Date format (YYYY-MM-DD)" wrappingWidth="214.13672256469727" />
+         </children>
+      </AnchorPane>
    </children>
 </StackPane>
