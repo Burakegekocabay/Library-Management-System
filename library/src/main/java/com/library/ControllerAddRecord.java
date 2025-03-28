@@ -61,9 +61,7 @@ public class ControllerAddRecord {
             return;
         }
 
-        
-/************************************************************************************ */
-         // Check if the book has already been borrowed and not returned
+                 // Check if the book has already been borrowed and not returned
     if (isBookAlreadyBorrowed(bookID.getText())) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -82,7 +80,6 @@ public class ControllerAddRecord {
         alert.showAndWait();
         return;
     }
-/*************************************************************************** */
         try {
             // Execute the insert query to add the borrow record
             PreparedStatement statement = Config.getConn().prepareStatement(sql);
@@ -97,6 +94,7 @@ public class ControllerAddRecord {
             statement.executeUpdate();
 
             decreaseBorrowRights(memberID.getText()); // Decrease the borrow rights of the member by 1
+            changeAvailability(bookID.getText()); // Change the book's availability status to busy
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -229,4 +227,14 @@ public class ControllerAddRecord {
         }
     }
 
+    // Method to change the book's availability status to busy
+    private void changeAvailability(String bookID) {
+        String query = "UPDATE books SET status = FALSE WHERE ID = ?";
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
+            stmt.setString(1, bookID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

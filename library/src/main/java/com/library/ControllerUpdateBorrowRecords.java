@@ -1,6 +1,8 @@
 package com.library;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -57,6 +59,16 @@ public class ControllerUpdateBorrowRecords
                 alert.showAndWait();
                 return;
             }
+            // Method to change the book's availability status to busy
+   
+        String query = "UPDATE books SET status = TRUE WHERE ID = ?";
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
+            stmt.setString(1, bookID.getText());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+            
        }
 
         // Updated SQL query without book_title and member_name

@@ -51,6 +51,7 @@ public class ControllerUpdateBook
             statement.setString(3, updatedGenre);
             statement.setString(4, updatedID);
             statement.executeUpdate();
+            
         }
         catch (Exception e) { e.printStackTrace(); }
         closeWindow();

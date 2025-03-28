@@ -5,9 +5,9 @@ public class Books {
     private String title;
     private String author;
     private String genre;
-    private boolean status; // TRUE = Available, FALSE = Not Available
+    private String status; // TRUE = Available, FALSE = Not Available
 
-    public Books(String ID, String title, String author, String genre, boolean status) {
+    public Books(String ID, String title, String author, String genre, String status) {
         this.ID = ID;
         this.title = title;
         this.author = author;
@@ -32,7 +32,7 @@ public class Books {
         return genre;
     }
 
-    public boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 }
