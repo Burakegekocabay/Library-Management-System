@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 public class ControllerBorrowingSystem {
      // FXML elements
+    @FXML private TextField borrowCode;
     @FXML private TextField bookID;
     @FXML private TextField bookTitle;
     @FXML private TextField memberID;
@@ -30,6 +31,7 @@ public class ControllerBorrowingSystem {
     @FXML private TextField status;
 
     @FXML private TableView<BorrowRecords> tableView;
+    @FXML private TableColumn<BorrowRecords, String> borrowID;
     @FXML private TableColumn<BorrowRecords, String> bookIDColumn;
     @FXML private TableColumn<BorrowRecords, String> bookTitleColumn;
     @FXML private TableColumn<BorrowRecords, String> memberIDColumn;
@@ -51,6 +53,7 @@ public class ControllerBorrowingSystem {
     @FXML
     public void initialize() {
         // Initialize columns for TableView
+        borrowID.setCellValueFactory(new PropertyValueFactory<>("borrowID"));
         bookIDColumn.setCellValueFactory(new PropertyValueFactory<>("bookID"));
         bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
         memberIDColumn.setCellValueFactory(new PropertyValueFactory<>("memberID"));
@@ -70,6 +73,7 @@ public class ControllerBorrowingSystem {
             ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
+                String borrow_id = resultSet.getString("borrow_id");
                 String book_id = resultSet.getString("book_id");
                 String book_title = resultSet.getString("book_title");
                 String member_id = resultSet.getString("member_id");
@@ -78,7 +82,7 @@ public class ControllerBorrowingSystem {
                 String due_date = resultSet.getString("due_date");
                 String return_date = resultSet.getString("return_date");
                 String status = resultSet.getString("status");
-                bookBorrowData.add(new BorrowRecords(book_id, book_title, member_id, member_name, borrow_date, due_date, return_date, status)); // add book to list
+                bookBorrowData.add(new BorrowRecords(borrow_id,book_id, book_title, member_id, member_name, borrow_date, due_date, return_date, status)); // add book to list
             }
             statement.close();
 
@@ -96,6 +100,8 @@ public class ControllerBorrowingSystem {
 
     // Set a predicate to filter the data based on the search criteria
     filteredData.setPredicate(record -> {
+        
+        boolean matchesBorrowCode = borrowCode.getText().isEmpty() || record.getBorrowID().contains(borrowCode.getText());
         boolean matchesBookID = bookID.getText().isEmpty() || record.getBookID().contains(bookID.getText());
         boolean matchesBookTitle = bookTitle.getText().isEmpty() || record.getBookTitle().contains(bookTitle.getText());
         boolean matchesMemberID = memberID.getText().isEmpty() || record.getMemberID().contains(memberID.getText());
@@ -106,7 +112,7 @@ public class ControllerBorrowingSystem {
         boolean matchesStatus = status.getText().isEmpty() || record.getStatus().contains(status.getText());
 
         // Return true if all conditions are met (matches all search criteria)
-        return matchesBookID && matchesBookTitle && matchesMemberID && matchesMemberName &&
+        return matchesBorrowCode && matchesBookID && matchesBookTitle && matchesMemberID && matchesMemberName &&
                matchesBorrowDate && matchesDueDate && matchesReturnDate && matchesStatus;
     });
 

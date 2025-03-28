@@ -29,7 +29,9 @@ public class ControllerUpdateBorrowRecords
     @FXML private Label returnDateLabel;
     @FXML private Label statusLabel;
 
+
     private Runnable updateTableCallback;
+    private String borrowID;
 
     public void setBorrowRecords(BorrowRecords borrowRecords, Runnable updateTableCallback) // borrowRecords is the record to be updated
     {
@@ -39,7 +41,8 @@ public class ControllerUpdateBorrowRecords
         borrowDate.setText(borrowRecords.getBorrowDate());
         dueDate.setText(borrowRecords.getDueDate());
         returnDate.setText(borrowRecords.getReturnDate());
-        status.setValue(borrowRecords.getStatus());   
+        status.setValue(borrowRecords.getStatus());
+        this.borrowID = borrowRecords.getBorrowID(); 
     }
 
     @FXML
@@ -57,7 +60,7 @@ public class ControllerUpdateBorrowRecords
        }
 
         // Updated SQL query without book_title and member_name
-        String sql = "UPDATE borrowings SET book_id = ?, member_id = ?, borrow_date = ?, due_date = ?, return_date = ?, status = ? WHERE book_id = ?";
+        String sql = "UPDATE borrowings SET book_id = ?, member_id = ?, borrow_date = ?, due_date = ?, return_date = ?, status = ? WHERE borrow_id = ?";
         
         String updatedBookID = bookID.getText();
         String updatedMemberID = memberID.getText();
@@ -76,7 +79,7 @@ public class ControllerUpdateBorrowRecords
             statement.setString(4, updatedDueDate);    // Set Due Date
             statement.setString(5, updatedReturnDate); // Set Return Date
             statement.setString(6, updatedStatus);     // Set Status
-            statement.setString(7, updatedBookID);     // Set Book ID in WHERE clause (for WHERE condition)
+            statement.setString(7, borrowID);     // Set Book ID in WHERE clause (for WHERE condition)
             statement.executeUpdate();
         }
         catch (Exception e) { e.printStackTrace(); }
@@ -87,12 +90,12 @@ public class ControllerUpdateBorrowRecords
     @FXML
     private void deleteBorrowRecord()
     {
-        String sql = "DELETE FROM borrowings WHERE book_id = ?";
+        String sql = "DELETE FROM borrowings WHERE borrow_id = ?";
         try
         {
             Config.getConn().createStatement().executeUpdate("USE " + Config.getDbNAME());
             PreparedStatement statement = Config.getConn().prepareStatement(sql);
-            statement.setString(1, bookID.getText());
+            statement.setString(1, borrowID);
             statement.executeUpdate();
         }
         catch (Exception e) { e.printStackTrace(); }

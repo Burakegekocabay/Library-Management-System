@@ -2,6 +2,7 @@ package com.library;
 
 
 public class BorrowRecords {
+    private String borrowID;
     private String bookID;
     private String bookTitle;
     private String memberID;
@@ -11,7 +12,8 @@ public class BorrowRecords {
     private String return_date;
     private String status;
 
-    public BorrowRecords(String bookID, String bookTitle, String memberID, String memberName,String borrowDate, String dueDate, String return_date, String status) {
+    public BorrowRecords(String borrowID, String bookID, String bookTitle, String memberID, String memberName,String borrowDate, String dueDate, String return_date, String status) {
+        this.borrowID = borrowID;
         this.bookID =bookID;
         this.bookTitle =bookTitle;
         this.memberID =memberID;
@@ -23,6 +25,7 @@ public class BorrowRecords {
     }
 
     // Getter methods
+    public String getBorrowID() { return borrowID; }
     public String getBookID() { return bookID; }
     public String getBookTitle() { return bookTitle; }
     public String getMemberID() { return memberID; }

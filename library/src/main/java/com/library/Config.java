@@ -102,6 +102,7 @@ public class Config
         +"status BOOLEAN NOT NULL DEFAULT TRUE)"; //TRUE = Available, FALSE = Not Available
 
         String borrowing_table = "CREATE TABLE "+ Config.getDbNAME() + ".borrowings ("
+        +"borrow_id VARCHAR(255) NOT NULL,"
         +"book_id VARCHAR(255) NOT NULL," 
         +"book_title VARCHAR(255) NOT NULL, "
         +"member_id VARCHAR(255) NOT NULL, "

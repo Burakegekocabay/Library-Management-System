@@ -29,7 +29,7 @@ public class ControllerAddRecord {
     @FXML
     void addBorrowRecord() {
         // SQL query to insert a new borrow record
-        String sql = "INSERT INTO borrowings (book_id, book_title, member_id, member_name, borrow_date, due_date) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO borrowings (borrow_id, book_id, book_title, member_id, member_name, borrow_date, due_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         
         // Validate input fields
@@ -86,12 +86,13 @@ public class ControllerAddRecord {
         try {
             // Execute the insert query to add the borrow record
             PreparedStatement statement = Config.getConn().prepareStatement(sql);
-            statement.setString(1, bookID.getText());
-            statement.setString(2, getBookTitleByID(bookID.getText()));
-            statement.setString(3, memberID.getText());
-            statement.setString(4, getMemberNameByID(memberID.getText()));
-            statement.setString(5, borrowDate.getText());
-            statement.setString(6, dueDate.getText());
+            statement.setString(1, generateBorrowID()); // Generate a unique borrow ID
+            statement.setString(2, bookID.getText());
+            statement.setString(3, getBookTitleByID(bookID.getText()));
+            statement.setString(4, memberID.getText());
+            statement.setString(5, getMemberNameByID(memberID.getText()));
+            statement.setString(6, borrowDate.getText());
+            statement.setString(7, dueDate.getText());
 
             statement.executeUpdate();
 
@@ -178,30 +179,54 @@ public class ControllerAddRecord {
         }
     }
 
-// Method to check if the member has borrow rights left
-private boolean hasBorrowRights(String memberID) {
-    String query = "SELECT books_left FROM members WHERE ID = ?";
-    try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
-        stmt.setString(1, memberID);
-        ResultSet resultSet = stmt.executeQuery();
-        if (resultSet.next()) {
-            int borrowRights = resultSet.getInt("books_left");
-            return borrowRights > 0;
+    // Method to check if the member has borrow rights left
+    private boolean hasBorrowRights(String memberID) {
+        String query = "SELECT books_left FROM members WHERE ID = ?";
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
+            stmt.setString(1, memberID);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                int borrowRights = resultSet.getInt("books_left");
+                return borrowRights > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return false;
     }
-    return false;
-}
 
-// Method to decrease the borrow rights of the member by 1 after borrowing
-private void decreaseBorrowRights(String memberID) {
-    String query = "UPDATE members SET books_left = books_left - 1 WHERE ID = ?";
-    try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
-        stmt.setString(1, memberID);
-        stmt.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
+    // Method to decrease the borrow rights of the member by 1 after borrowing
+    private void decreaseBorrowRights(String memberID) {
+        String query = "UPDATE members SET books_left = books_left - 1 WHERE ID = ?";
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
+            stmt.setString(1, memberID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
+
+    // Method to generate a unique borrow ID
+    private String generateBorrowID() {
+        String borrowID;
+    do {
+        borrowID = Utils.makeKEY().substring(0,10);
+    } while (isBorrowIDExists(borrowID));
+    return borrowID;
+    }
+    
+
+    // Method to check if the borrow ID already exists
+    private boolean isBorrowIDExists(String borrowID) {
+        String query = "SELECT * FROM borrowings WHERE borrow_id = ?";
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
+            stmt.setString(1, borrowID);
+            ResultSet resultSet = stmt.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
