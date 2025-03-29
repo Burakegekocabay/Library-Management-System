@@ -29,6 +29,7 @@
         <Button fx:id="searchButton" layoutX="537.0" layoutY="21.0" onAction="#search" text="Search" />
         <Button fx:id="editButton" layoutX="25.0" layoutY="287.0" onAction="#updateBook" text="Edit Book" />
         <Button fx:id="addButton" layoutX="520.0" layoutY="287.0" onAction="#addBook" text="Add Book" />
+            <Button fx:id="mainMenuButton" layoutX="270.0" layoutY="356.0" mnemonicParsing="false" onAction="#toMainMenu" text="Main Menu" />
          </children>
       </AnchorPane>
    </children>

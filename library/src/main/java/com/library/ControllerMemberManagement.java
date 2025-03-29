@@ -32,7 +32,11 @@ public class ControllerMemberManagement
     @FXML
     private TableColumn<Members, String> Mail;  
     @FXML
-    private TableColumn<Members, String> Phone;  
+    private TableColumn<Members, String> Phone;
+    @FXML
+    private TableColumn<Members, Integer> Borrow_rights;
+    @FXML
+    private TableColumn<Members, String> Status;
 
 
     @FXML
@@ -44,11 +48,15 @@ public class ControllerMemberManagement
     @FXML
     private TextField searchPhone;
     @FXML
+    private TextField searchStatus;
+    @FXML
     private Button searchButton;
     @FXML
     private Button editButton;
     @FXML
     private Button AddButton;
+    @FXML
+    private Button mainMenuButton;
 
     @FXML
     void initialize()
@@ -58,12 +66,15 @@ public class ControllerMemberManagement
         Name.setCellValueFactory(new PropertyValueFactory<>("Name"));
         Mail.setCellValueFactory(new PropertyValueFactory<>("Mail"));
         Phone.setCellValueFactory(new PropertyValueFactory<>("Phone"));
+        Borrow_rights.setCellValueFactory(new PropertyValueFactory<>("BooksLeft"));
+        Status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
         getUsersDB();
     }
 
     void getUsersDB() // get user data from database
     {
-        String sql = "SELECT ID, Name, Mail, Phone FROM members";
+        String sql = "SELECT ID, Name, Mail, Phone, books_left, status FROM members";
         try
         {
             Config.getConn().createStatement().executeUpdate("USE "+Config.getDbNAME());
@@ -76,7 +87,9 @@ public class ControllerMemberManagement
                 String Name = resultSet.getString("Name");
                 String Mail = resultSet.getString("Mail");
                 String Phone = resultSet.getString("Phone");
-                userList.add(new Members(id, Name, Mail, Phone)); // add user to list
+                int books_left = resultSet.getInt("books_left");
+                String status = resultSet.getString("status");
+                userList.add(new Members(id, Name, Mail, Phone, books_left, status)); // add user to list
             }
             statement.close();
 
@@ -94,7 +107,8 @@ public class ControllerMemberManagement
             boolean matchesName = searchName.getText().isEmpty() || Members.getName().contains(searchName.getText());
             boolean matchesMail = searchMail.getText().isEmpty() || Members.getMail().contains(searchMail.getText());
             boolean matchesPhone = searchPhone.getText().isEmpty() || Members.getPhone().contains(searchPhone.getText());
-            return matchesID && matchesName && matchesMail && matchesPhone;
+            boolean matchesStatus = searchStatus.getText().isEmpty() || Members.getStatus().contains(searchStatus.getText());
+            return matchesID && matchesName && matchesMail && matchesPhone && matchesStatus;
         });
 
         tableView.setItems(filteredData);
@@ -155,5 +169,11 @@ public class ControllerMemberManagement
             stage.show();
         }
         catch (Exception e){e.printStackTrace();}
+    }
+
+    @FXML
+    void toMainMenu() {
+        Stage currentStage = (Stage) mainMenuButton.getScene().getWindow();
+        Utils.redirect(currentStage,"/com/library/StaffMainPage.fxml"," Library Management System");
     }
 }

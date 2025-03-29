@@ -92,14 +92,31 @@ public class Config
         +"mail VARCHAR(255) NOT NULL, " 
         +"phone VARCHAR(255) NOT NULL,"
         +"password VARCHAR(255) NOT NULL,"
-        +"books_left INT NOT NULL DEFAULT 3)"; //Maximum 3 books can be borrowed by a member at a time.
-
+        +"books_left INT NOT NULL DEFAULT 3,"  //Maximum 3 books can be borrowed by a member at a time.
+        + "status VARCHAR(255) NOT NULL DEFAULT 'Active')";
         String books_table = "CREATE TABLE "+ Config.getDbNAME() + ".books ("
         +"ID VARCHAR(255) NOT NULL," 
         +"title VARCHAR(255) NOT NULL, "
         +"author VARCHAR(255) NOT NULL, "
         +"genre VARCHAR(255) NOT NULL, "
         +"status BOOLEAN NOT NULL DEFAULT TRUE)"; //TRUE = Available, FALSE = Not Available
+
+        String borrowing_table = "CREATE TABLE "+ Config.getDbNAME() + ".borrowings ("
+        +"borrow_id VARCHAR(255) NOT NULL,"
+        +"book_id VARCHAR(255) NOT NULL," 
+        +"book_title VARCHAR(255) NOT NULL, "
+        +"member_id VARCHAR(255) NOT NULL, "
+        +"member_name VARCHAR(255) NOT NULL, "
+        +"borrow_date DATE NOT NULL, "
+        +"due_date DATE NOT NULL,"
+        +"return_date VARCHAR(255) NOT NULL DEFAULT '-' ,"
+        +"status VARCHAR(255) NOT NULL DEFAULT 'Borrowed')"; //Borrowed, Returned, Overdue
+
+        String notes_table = "CREATE TABLE "+ Config.getDbNAME() + ".notes ("
+        +"date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," 
+        +"id VARCHAR(255) NOT NULL, "
+        +"name VARCHAR(255) NOT NULL, "
+        +"notes LONGTEXT NOT NULL)";
 
         try (Statement stmt = Config.getConn().createStatement()) 
         {
@@ -114,6 +131,8 @@ public class Config
             preparedStatement.executeUpdate();
             stmt.executeUpdate(members_table); //Create LibraryManagementSystem.members table
             stmt.executeUpdate(books_table); //Create LibraryManagementSystem.books table
+            stmt.executeUpdate(borrowing_table); //Create LibraryManagementSystem.borrowings table
+            stmt.executeUpdate(notes_table); //Create LibraryManagementSystem.notes table
         } catch (SQLException e) {e.printStackTrace();}
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("MYSQL Server");

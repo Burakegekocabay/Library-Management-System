@@ -50,6 +50,8 @@ public class ControllerBookManagement {
     private Button editButton;
     @FXML
     private Button addButton;
+    @FXML
+    private Button mainMenuButton;
 
     @FXML
     void initialize() {
@@ -64,6 +66,7 @@ public class ControllerBookManagement {
 
     void getBooksDB() {
         String sql = "SELECT ID, title, author, genre, status FROM books";
+        String stringStatus;
         try {
             Config.getConn().createStatement().executeUpdate("USE " + Config.getDbNAME());
             Statement statement = Config.getConn().createStatement();
@@ -75,7 +78,12 @@ public class ControllerBookManagement {
                 String author = resultSet.getString("author");
                 String genre = resultSet.getString("genre");
                 boolean status = resultSet.getBoolean("status");
-                booksList.add(new Books(id, title, author, genre, status)); // add book to list
+                if (status) {
+                    stringStatus = "Available"; // Book is available
+                } else {
+                    stringStatus = "busy"; // Book is not available
+                }
+                booksList.add(new Books(id, title, author, genre, stringStatus)); // add book to list
             }
             statement.close();
 
@@ -153,5 +161,11 @@ public class ControllerBookManagement {
             stage.show();
         }
         catch (Exception e){e.printStackTrace();}
+    }
+
+    @FXML
+    void toMainMenu() {
+        Stage currentStage = (Stage) mainMenuButton.getScene().getWindow();
+        Utils.redirect(currentStage,"/com/library/StaffMainPage.fxml"," Library Management System");
     }
 }
