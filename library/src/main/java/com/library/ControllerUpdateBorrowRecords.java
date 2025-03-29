@@ -68,7 +68,8 @@ public class ControllerUpdateBorrowRecords
         } catch (SQLException e) {
             e.printStackTrace(); 
         }
-            
+        // Method to increase the number of booking rights for the member
+         increaseBorrowRights(memberID.getText());
        }
 
         // Updated SQL query without book_title and member_name
@@ -121,5 +122,15 @@ public class ControllerUpdateBorrowRecords
         updateTableCallback.run(); // updates the table in the main window
         Stage currentStage = (Stage) deleteButton.getScene().getWindow();
         currentStage.close();
+    }
+
+    private void increaseBorrowRights(String memberID) {
+        String query = "UPDATE members SET books_left = books_left + 1 WHERE ID = ?";
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
+            stmt.setString(1, memberID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

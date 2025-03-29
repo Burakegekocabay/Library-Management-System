@@ -80,6 +80,16 @@ public class ControllerAddRecord {
         alert.showAndWait();
         return;
     }
+
+
+    if (!isMemberActive(memberID.getText())) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("This member is not active.");
+        alert.showAndWait();
+        return;
+    }
         try {
             // Execute the insert query to add the borrow record
             PreparedStatement statement = Config.getConn().prepareStatement(sql);
@@ -236,5 +246,18 @@ public class ControllerAddRecord {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // Method to check if the member is active
+    private boolean isMemberActive(String memberID) {
+        String query = "SELECT * FROM members WHERE ID = ? AND status = TRUE";
+        try (PreparedStatement stmt = Config.getConn().prepareStatement(query)) {
+            stmt.setString(1, memberID);
+            ResultSet resultSet = stmt.executeQuery();
+            return resultSet.next(); // If there's a result, it means the member is active
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

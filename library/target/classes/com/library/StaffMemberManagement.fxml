@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMemberManagement">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMemberManagement">
    <children>
       <AnchorPane prefHeight="500.0" prefWidth="700.0">
          <children>
@@ -15,18 +15,21 @@
             <TextField fx:id="searchName" layoutX="126.0" layoutY="29.0" prefHeight="26.0" prefWidth="149.0" promptText="Search by Name" />
             <TextField fx:id="searchMail" layoutX="290.0" layoutY="29.0" prefHeight="26.0" prefWidth="155.0" promptText="search by Mail" />
             <TextField fx:id="searchPhone" layoutX="457.0" layoutY="29.0" prefHeight="26.0" prefWidth="131.0" promptText="Phone(+xxxxxxx)" />
-            <Button fx:id="searchButton" layoutX="598.0" layoutY="29.0" mnemonicParsing="false" onAction="#search" text="Search" />
-            <TableView fx:id="tableView" layoutX="10.0" layoutY="79.0" prefHeight="200.0" prefWidth="681.0">
+            <Button fx:id="searchButton" layoutX="765.0" layoutY="29.0" mnemonicParsing="false" onAction="#search" text="Search" />
+            <TableView fx:id="tableView" layoutX="2.0" layoutY="79.0" prefHeight="310.0" prefWidth="828.0">
               <columns>
                 <TableColumn fx:id="ID" prefWidth="105.0" text="ID" />
                   <TableColumn fx:id="Name" prefWidth="205.0" text="Name" />
-                  <TableColumn fx:id="Mail" prefWidth="254.0" text="Mail" />
-                  <TableColumn fx:id="Phone" prefWidth="116.0" text="Phone" />
+                  <TableColumn fx:id="Mail" prefWidth="240.0" text="Mail" />
+                  <TableColumn fx:id="Phone" prefWidth="109.60003662109375" text="Phone" />
+                  <TableColumn fx:id="Borrow_rights" prefWidth="96.0" text="Borrow_rights" />
+                  <TableColumn fx:id="Status" prefWidth="68.8001708984375" text="Status" />
               </columns>
             </TableView>
-            <Button fx:id="editButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="26.0" prefWidth="155.0" text="Edit Selected Member" />
-            <Button fx:id="addButton" layoutX="555.0" layoutY="291.0" mnemonicParsing="false" onAction="#addMember" prefHeight="26.0" prefWidth="131.0" text="Add New Member" />
-            <Button fx:id="mainMenuButton" layoutX="309.0" layoutY="444.0" mnemonicParsing="false" onAction="#toMainMenu" prefHeight="26.0" prefWidth="82.0" text="Main Menu" />
+            <Button fx:id="editButton" layoutX="10.0" layoutY="402.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="26.0" prefWidth="155.0" text="Edit Selected Member" />
+            <Button fx:id="addButton" layoutX="685.0" layoutY="402.0" mnemonicParsing="false" onAction="#addMember" prefHeight="26.0" prefWidth="131.0" text="Add New Member" />
+            <Button fx:id="mainMenuButton" layoutX="364.0" layoutY="452.0" mnemonicParsing="false" onAction="#toMainMenu" prefHeight="26.0" prefWidth="124.0" text="Main Menu" />
+            <TextField fx:id="searchStatus" layoutX="602.0" layoutY="29.0" prefHeight="26.0" prefWidth="131.0" promptText="Status" />
          </children>
          </AnchorPane>
    </children>
