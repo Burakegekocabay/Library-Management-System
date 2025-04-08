@@ -58,6 +58,11 @@ public class ControllerMemberNotes {
             statement.close();
             tableView.setItems(noteList); 
             tableView.refresh();
+
+            // Apply sorting after data is loaded
+            tableView.getSortOrder().clear(); // Clear any existing sort order
+            tableView.getSortOrder().add(date); // Add the date column to the sort order
+            date.setSortType(TableColumn.SortType.DESCENDING); // Set descending sort type
         } catch (Exception e) {
             e.printStackTrace();
         }

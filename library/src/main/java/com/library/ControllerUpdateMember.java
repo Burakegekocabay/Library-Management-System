@@ -106,6 +106,17 @@ public class ControllerUpdateMember
             e.printStackTrace();
             }
         }
+        else
+        {
+            // Delete the existing note, if any
+            String deleteSql = "DELETE FROM notes WHERE id = ?";
+            try (PreparedStatement deleteStmt = Config.getConn().prepareStatement(deleteSql)) {
+                deleteStmt.setString(1, updatedID);
+                deleteStmt.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         try
         {
