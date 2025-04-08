@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMemberMain">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <TableView fx:id="tableView" layoutX="7.0" layoutY="142.0" prefHeight="250.0" prefWidth="593.0">
+            <columns>
+                <TableColumn fx:id="ID" prefWidth="68.00002861022949" text="ID" />
+                <TableColumn fx:id="title" prefWidth="200.79999542236328" text="Title" />
+                <TableColumn fx:id="author" prefWidth="149.60003662109375" text="Author" />
+                <TableColumn fx:id="genre" prefWidth="89.5999755859375" text="Genre" />
+                <TableColumn fx:id="status" prefWidth="84.0" text="Status" />
+            </columns>
+            </TableView>
+
+        <TextField fx:id="searchID" layoutX="7.0" layoutY="108.0" prefHeight="16.0" prefWidth="85.0" promptText="Search by ID" />
+        <TextField fx:id="searchTitle" layoutX="119.0" layoutY="108.0" prefHeight="16.0" prefWidth="101.0" promptText="Search by Title" />
+        <TextField fx:id="searchAuthor" layoutX="244.0" layoutY="108.0" prefHeight="16.0" prefWidth="118.0" promptText="Search by Author" />
+        <TextField fx:id="searchGenre" layoutX="388.0" layoutY="108.0" prefHeight="16.0" prefWidth="111.0" promptText="Search by Genre" />
+
+        <Button fx:id="searchButton" layoutX="521.0" layoutY="108.0" onAction="#search" text="Search" />
+            <ImageView fitHeight="55.0" fitWidth="65.0" onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/log_out.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="55.0" fitWidth="65.0" layoutX="545.0" onMouseClicked="#toProfile" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/profile.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
