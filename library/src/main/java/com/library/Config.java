@@ -38,9 +38,10 @@ public class Config
         return connector + "/" + dbNAME;
     }
 
-    public static void Connect() {
+    public static boolean Connect() {
         try {
             conn = DriverManager.getConnection(getLoginURL(), getUser(), getPassword());
+            return true;
         } catch (SQLException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -52,6 +53,7 @@ public class Config
                 +"MYSQL_PASS = password(for no password do not create MYSQL_PASS variable)\n");
                 alert.showAndWait();
         }
+        return false;
     }
 
     public static Connection getConn() {
