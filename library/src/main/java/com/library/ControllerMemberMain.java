@@ -161,6 +161,7 @@ public class ControllerMemberMain {
                 controller.setBookTitle(selectedBook.getTitle());
                 controller.setMemberID(userId);
                 controller.setBookStatus(selectedBook.getStatus());
+                controller.setBorrowLimit(checklimit(userId));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
@@ -183,21 +184,21 @@ public class ControllerMemberMain {
         }
     }
 
-    void getLimit()
+    int checklimit(String userId)
     {
-        String sql = "SELECT limit FROM members WHERE ID = '" + userId + "'";
+        String sql = "SELECT books_left FROM members WHERE ID = '" +userId + "'";
         try {
             Config.getConn().createStatement().executeUpdate("USE " + Config.getDbNAME());
-            Statement statement = Config.getConn().createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            if (resultSet.next()) {
-                String limitValue = resultSet.getString("limit");
-                limit.setText(limitValue);
+            ResultSet rs = Config.getConn().createStatement().executeQuery(sql);
+            if (rs.next()) {
+                return (rs.getInt("books_left"));
             }
-            statement.close();
+            rs.close();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return 0;
     }
+
 }

@@ -95,7 +95,9 @@ public class Config
         +"phone VARCHAR(255) NOT NULL,"
         +"password VARCHAR(255) NOT NULL,"
         +"books_left INT NOT NULL DEFAULT 3,"  //Maximum 3 books can be borrowed by a member at a time.
+        +"pending BOOLEAN NOT NULL DEFAULT FALSE," //TRUE = Pending, FALSE = Not Pending
         + "status VARCHAR(255) NOT NULL DEFAULT 'Active')";
+
         String books_table = "CREATE TABLE "+ Config.getDbNAME() + ".books ("
         +"ID VARCHAR(255) NOT NULL," 
         +"title VARCHAR(255) NOT NULL, "
@@ -120,6 +122,15 @@ public class Config
         +"name VARCHAR(255) NOT NULL, "
         +"notes LONGTEXT NOT NULL)";
 
+        String request_table = "CREATE TABLE "+ Config.getDbNAME() + ".requests ("
+        +"request_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+        +"member_id VARCHAR(255) NOT NULL,"
+        +"member_name VARCHAR(255) NOT NULL,"
+        +"book_id VARCHAR(255) NOT NULL,"
+        +"book_title VARCHAR(255) NOT NULL,"
+        +"borrow_date DATE NOT NULL,"
+        +"due_date DATE NOT NULL)";
+
         try (Statement stmt = Config.getConn().createStatement()) 
         {
             stmt.executeUpdate("CREATE DATABASE "+ Config.getDbNAME()); //Create LibraryManagementSystem Database
@@ -135,6 +146,7 @@ public class Config
             stmt.executeUpdate(books_table); //Create LibraryManagementSystem.books table
             stmt.executeUpdate(borrowing_table); //Create LibraryManagementSystem.borrowings table
             stmt.executeUpdate(notes_table); //Create LibraryManagementSystem.notes table
+            stmt.executeUpdate(request_table); //Create LibraryManagementSystem.requests table
         } catch (SQLException e) {e.printStackTrace();}
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("MYSQL Server");
@@ -144,14 +156,20 @@ public class Config
 
     public static boolean isFirstLogin() //Checking if it's the first login
     {
-        String query = "SELECT securityKEY FROM staff WHERE securityKEY IS NULL LIMIT 1";
+        String query = "SELECT securityKEY FROM staff LIMIT 1";
 
         try
         {
             Config.getConn().createStatement().executeUpdate("USE LibraryManagementSystem");
             PreparedStatement stmt = Config.getConn().prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
-            return(rs.next());
+            if (rs.next())
+            {
+                String key = rs.getString("securityKEY");
+                if (key == null || key.isEmpty())
+                    return (true);
+            }
+            return(false);
         }
         catch (SQLException e) {
             e.printStackTrace();
