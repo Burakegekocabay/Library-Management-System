@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="263.0" prefWidth="525.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerStaffRequests">
+   <children>
+      <AnchorPane prefHeight="478.0" prefWidth="611.0">
+         <children>
+            <!-- TableView -->
+            <TableView fx:id="tableView" prefHeight="200.0" prefWidth="523.0">
+               <columns>
+                  <TableColumn fx:id="dateColumn" prefWidth="121.60000991821289" text="Date" />
+                  <TableColumn fx:id="memberIDColumn" prefWidth="106.93338012695312" text="Member ID" />
+                  <TableColumn fx:id="bookIDColumn" prefWidth="112.79998016357422" text="Book ID" />
+                  <TableColumn fx:id="borrowDateColumn" prefWidth="91.4666748046875" text="Borrow Date" />
+                  <TableColumn fx:id="dueDateColumn" minWidth="0.0" prefWidth="87.73333740234375" text="Due Date" />
+               </columns>
+            </TableView>
+            <Button fx:id="mainMenuButton" layoutX="14.0" layoutY="215.0" mnemonicParsing="false" onAction="#toMainMenu" prefHeight="34.0" prefWidth="124.0" text="Main Menu" />
+            <Button fx:id="manageButton" layoutX="388.0" layoutY="215.0" mnemonicParsing="false" onAction="#toManage" prefHeight="34.0" prefWidth="124.0" text="Manage Request" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

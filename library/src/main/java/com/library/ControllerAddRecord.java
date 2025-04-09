@@ -92,8 +92,6 @@ public class ControllerAddRecord {
     }
         try {
             // Execute the insert query to add the borrow record
-            String formattedBorrowDate = formatDate(borrowDate.getText());
-            String formattedDueDate = formatDate(dueDate.getText());
 
             PreparedStatement statement = Config.getConn().prepareStatement(sql);
             statement.setString(1, generateBorrowID()); // Generate a unique borrow ID
@@ -101,8 +99,8 @@ public class ControllerAddRecord {
             statement.setString(3, getBookTitleByID(bookID.getText()));
             statement.setString(4, memberID.getText());
             statement.setString(5, getMemberNameByID(memberID.getText()));
-            statement.setString(6, formattedBorrowDate);
-            statement.setString(7, formattedDueDate);
+            statement.setString(6, borrowDate.getText());
+            statement.setString(7, dueDate.getText());
 
             statement.executeUpdate();
 
@@ -113,12 +111,6 @@ public class ControllerAddRecord {
         }
 
         closeWindow();
-    }
-
-    private String formatDate(String date) throws Exception {
-        java.text.SimpleDateFormat inputFormat = new java.text.SimpleDateFormat("dd-MM-yyyy");
-        java.text.SimpleDateFormat outputFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-        return outputFormat.format(inputFormat.parse(date));
     }
 
     @FXML

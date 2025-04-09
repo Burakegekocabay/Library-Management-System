@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerStaffMainPage">
    <children>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0">
    <children>
       <ImageView fx:id="borrowingSystemImageView" fitHeight="135.0" fitWidth="140.0" layoutX="85.0" layoutY="165.0" onMouseClicked="#toBorrowing" pickOnBounds="true" preserveRatio="true">
       <image>
@@ -30,7 +33,22 @@
             <Image url="@../pictures/member_notes.png" />
          </image>
       </ImageView>
-      <Button fx:id="logOutButton" layoutX="191.0" layoutY="558.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="66.0" text="Log out" />
+      <Button fx:id="logOutButton" layoutX="200.0" layoutY="546.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="66.0" text="Log out" />
+            <Text fx:id="text1" fill="#cf0086" layoutX="120.0" layoutY="72.0" onMouseClicked="#toRequests" strokeType="OUTSIDE" strokeWidth="0.0" text="You have" underline="true" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Label fx:id="label" layoutX="183.0" layoutY="58.0" onMouseClicked="#toRequests" prefHeight="19.0" prefWidth="15.0" text="0" underline="true" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Text fx:id="text2" fill="#cf0086" layoutX="201.0" layoutY="73.0" onMouseClicked="#toRequests" strokeType="OUTSIDE" strokeWidth="0.0" text="New Borrow Request" underline="true" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
    </children>
 </AnchorPane>
 </children>

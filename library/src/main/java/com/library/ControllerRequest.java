@@ -70,7 +70,15 @@ public class ControllerRequest {
                     alert.showAndWait();
                     return;
                 }
-    
+                // Check if the book is available
+                if (!rs.getBoolean("status")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("The book is not available for borrowing.");
+                    alert.showAndWait();
+                    return;
+                }
                 // Check if the member has reached the limit
                 int booksLeft = rs2.getInt("books_left");
                 if (booksLeft > 0) {
