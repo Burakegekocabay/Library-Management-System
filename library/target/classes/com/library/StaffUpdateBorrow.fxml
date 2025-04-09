@@ -51,7 +51,7 @@
             
             <!-- Delete Button -->
             <Button fx:id="deleteButton" layoutX="14.0" layoutY="316.0" mnemonicParsing="false" onAction="#deleteBorrowRecord" prefHeight="18.0" prefWidth="135.0" text="Delete Borrow Record" textFill="#fa0000" />
-            <Button fx:id="adminButton" layoutX="14.0" layoutY="352.0" mnemonicParsing="false"  onAction="#toAdminPage" prefHeight="26.0" prefWidth="135.0" text="Admin Options " textFill="#e70eff" />
+            <Button fx:id="updateButton" layoutX="14.0" layoutY="352.0" mnemonicParsing="false"  onAction="#updateBorrowRecord" prefHeight="26.0" prefWidth="135.0" text="Admin Options " textFill="#e70eff" />
          </children>
       </AnchorPane>
    </children>

@@ -9,6 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,7 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class ControllerMemberMain {
-     private ObservableList<Books> booksList = FXCollections.observableArrayList();
+    private ObservableList<Books> booksList = FXCollections.observableArrayList();
 
     @FXML
     private TableView<Books> tableView;
@@ -43,13 +44,15 @@ public class ControllerMemberMain {
     @FXML
     private TextField searchGenre;
     @FXML
+    private TextField limit;
+
+    @FXML
     private Button searchButton;
     @FXML
-    private Button editButton;
+    private Button borrowButton;
+    
     @FXML
-    private Button addButton;
-    @FXML
-    private Button mainMenuButton;
+    private String userId;
 
     @FXML
     void initialize() {
@@ -87,7 +90,7 @@ public class ControllerMemberMain {
 
             tableView.setItems(booksList);
             tableView.refresh();
-        } catch (Exception e) {
+            } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -124,18 +127,77 @@ public class ControllerMemberMain {
     @FXML
     void toProfile()
     {
-        Stage currentStage = (Stage) searchButton.getScene().getWindow();
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/MemberProfile.fxml"));
         StackPane root2;
         try
         {
+            Stage currentStage = (Stage) searchAuthor.getScene().getWindow();
+            userId = currentStage.getTitle();
             root2 = loader.load();
             Stage stage = new Stage();
-            stage.setTitle(currentStage.getTitle());
+            stage.setTitle(userId);
             stage.setResizable(false);
             stage.setScene(new Scene(root2));
             stage.show();
         }
         catch (Exception e){e.printStackTrace();}
+    }
+
+    @FXML
+    void borrow()
+    {
+        Stage currentStage = (Stage) searchAuthor.getScene().getWindow();
+        userId = currentStage.getTitle();
+
+        if (tableView.getSelectionModel().getSelectedItem() != null)
+        {
+            Books selectedBook = tableView.getSelectionModel().getSelectedItem();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/library/BorrowRequest.fxml"));
+                StackPane root = loader.load();
+                ControllerRequest controller = loader.getController();
+                controller.setBookID(selectedBook.getID());
+                controller.setBookTitle(selectedBook.getTitle());
+                controller.setMemberID(userId);
+                controller.setBookStatus(selectedBook.getStatus());
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText("Failed to open borrow request window.");
+                alert.showAndWait();
+            }
+        }    
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Please select a book to borrow.");
+            alert.showAndWait();
+        }
+    }
+
+    void getLimit()
+    {
+        String sql = "SELECT limit FROM members WHERE ID = '" + userId + "'";
+        try {
+            Config.getConn().createStatement().executeUpdate("USE " + Config.getDbNAME());
+            Statement statement = Config.getConn().createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                String limitValue = resultSet.getString("limit");
+                limit.setText(limitValue);
+            }
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

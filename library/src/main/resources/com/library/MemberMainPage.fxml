@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMemberMain">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerMemberMain">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane prefHeight="517.0" prefWidth="602.0">
          <children>
-            <TableView fx:id="tableView" layoutX="7.0" layoutY="142.0" prefHeight="250.0" prefWidth="593.0">
+            <TableView fx:id="tableView" layoutX="4.0" layoutY="75.0" prefHeight="250.0" prefWidth="593.0">
             <columns>
                 <TableColumn fx:id="ID" prefWidth="68.00002861022949" text="ID" />
                 <TableColumn fx:id="title" prefWidth="200.79999542236328" text="Title" />
@@ -23,12 +23,12 @@
             </columns>
             </TableView>
 
-        <TextField fx:id="searchID" layoutX="7.0" layoutY="108.0" prefHeight="16.0" prefWidth="85.0" promptText="Search by ID" />
-        <TextField fx:id="searchTitle" layoutX="119.0" layoutY="108.0" prefHeight="16.0" prefWidth="101.0" promptText="Search by Title" />
-        <TextField fx:id="searchAuthor" layoutX="244.0" layoutY="108.0" prefHeight="16.0" prefWidth="118.0" promptText="Search by Author" />
-        <TextField fx:id="searchGenre" layoutX="388.0" layoutY="108.0" prefHeight="16.0" prefWidth="111.0" promptText="Search by Genre" />
+        <TextField fx:id="searchID" layoutX="76.0" layoutY="15.0" prefHeight="16.0" prefWidth="85.0" promptText="Search by ID" />
+        <TextField fx:id="searchTitle" layoutX="178.0" layoutY="15.0" prefHeight="16.0" prefWidth="101.0" promptText="Search by Title" />
+        <TextField fx:id="searchAuthor" layoutX="292.0" layoutY="15.0" prefHeight="16.0" prefWidth="118.0" promptText="Search by Author" />
+        <TextField fx:id="searchGenre" layoutX="424.0" layoutY="15.0" prefHeight="16.0" prefWidth="111.0" promptText="Search by Genre" />
 
-        <Button fx:id="searchButton" layoutX="521.0" layoutY="108.0" onAction="#search" text="Search" />
+        <Button fx:id="searchButton" layoutX="266.0" layoutY="46.0" onAction="#search" text="Search" />
             <ImageView fitHeight="55.0" fitWidth="65.0" onMouseClicked="#logOut" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pictures/log_out.png" />
@@ -39,6 +39,7 @@
                   <Image url="@../pictures/profile.png" />
                </image>
             </ImageView>
+            <Button fx:id="borrowButton" layoutX="258.0" layoutY="334.0" mnemonicParsing="false" onAction="#borrow" text="Borrow Book" />
          </children>
       </AnchorPane>
    </children>

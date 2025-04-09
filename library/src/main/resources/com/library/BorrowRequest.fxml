@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library.ControllerRequest">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0">
+         <children>
+            <TextField fx:id="memberIdField" disable="true" editable="false" layoutX="271.0" layoutY="43.0" opacity="0.3" />
+            <Label layoutX="91.0" layoutY="47.0" text="Member ID" />
+            <TextField fx:id="bookIdField" disable="true" editable="false" layoutX="271.0" layoutY="166.0" opacity="0.3" />
+            <Label layoutX="98.0" layoutY="170.0" text="Book ID" />
+            <TextField fx:id="borrowLimitField" disable="true" editable="false" layoutX="271.0" layoutY="95.0" opacity="0.3" />
+            <TextField fx:id="bookTitleField" disable="true" editable="false" layoutX="271.0" layoutY="212.0" opacity="0.3" />
+            <Label layoutX="29.0" layoutY="99.0" text="Remaining borrowable book rights" />
+            <Label layoutX="93.0" layoutY="216.0" text="Book Title" />
+            <Separator layoutX="2.0" layoutY="144.0" prefHeight="18.0" prefWidth="450.0" />
+            <Separator layoutX="2.0" layoutY="284.0" prefHeight="18.0" prefWidth="450.0" />
+            <TextField fx:id="dueDateField" layoutX="273.0" layoutY="363.0" />
+            <Label layoutX="98.0" layoutY="367.0" text="Due Date" />
+            <TextField fx:id="borrowDateField" layoutX="273.0" layoutY="312.0" />
+            <Label layoutX="88.0" layoutY="316.0" text="Borrow Date" />
+            <Label layoutX="93.0" layoutY="260.0" text="Book Status" />
+            <TextField fx:id="bookStatusField" disable="true" editable="false" layoutX="273.0" layoutY="256.0" opacity="0.3" />
+         </children></AnchorPane>
+   </children>
+</StackPane>
