@@ -100,10 +100,10 @@ public class ControllerMemberMain {
         FilteredList<Books> filteredData = new FilteredList<>(booksList, p -> true);
 
         filteredData.setPredicate(book -> {
-            boolean matchesID = Utils.InjectionPreventer(searchID.getText()).isEmpty() || book.getID().contains(searchID.getText());
-            boolean matchesTitle = Utils.InjectionPreventer(searchTitle.getText()).isEmpty() || book.getTitle().contains(searchTitle.getText());
-            boolean matchesAuthor = Utils.InjectionPreventer(searchAuthor.getText()).isEmpty() || book.getAuthor().contains(searchAuthor.getText());
-            boolean matchesGenre =Utils.InjectionPreventer(searchGenre.getText()).isEmpty() || book.getGenre().contains(searchGenre.getText());
+            boolean matchesID = Utils.InjectionPreventer(searchID.getText()).isEmpty() || book.getID().toLowerCase().contains(searchID.getText().toLowerCase());
+            boolean matchesTitle = Utils.InjectionPreventer(searchTitle.getText()).isEmpty() || book.getTitle().toLowerCase().contains(searchTitle.getText().toLowerCase());
+            boolean matchesAuthor = Utils.InjectionPreventer(searchAuthor.getText()).isEmpty() || book.getAuthor().toLowerCase().contains(searchAuthor.getText().toLowerCase());
+            boolean matchesGenre =Utils.InjectionPreventer(searchGenre.getText()).isEmpty() || book.getGenre().toLowerCase().contains(searchGenre.getText().toLowerCase());
             return matchesID && matchesTitle && matchesAuthor && matchesGenre;
         });
 

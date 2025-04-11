@@ -113,7 +113,16 @@ public class ControllerMain {
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) 
             {
-                //If the username and password are correct, redirect to the member dashboard
+                //Check if user is a banned member
+                if (rs.getString("status").equals("Banned"))
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("You are banned from the library. Please contact the staff.");
+                    alert.showAndWait();
+                    return ;
+                }
                 Stage currentStage = (Stage) member_Login_Button.getScene().getWindow();
                 Utils.redirect(currentStage, "/com/library/MemberMainPage.fxml", member_IDField.getText());
             }

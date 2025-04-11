@@ -101,15 +101,15 @@ public class ControllerBorrowingSystem {
     // Set a predicate to filter the data based on the search criteria
     filteredData.setPredicate(record -> {
         
-        boolean matchesBorrowCode = borrowCode.getText().isEmpty() || record.getBorrowID().contains(borrowCode.getText());
-        boolean matchesBookID = bookID.getText().isEmpty() || record.getBookID().contains(bookID.getText());
-        boolean matchesBookTitle = bookTitle.getText().isEmpty() || record.getBookTitle().contains(bookTitle.getText());
-        boolean matchesMemberID = memberID.getText().isEmpty() || record.getMemberID().contains(memberID.getText());
-        boolean matchesMemberName = memberName.getText().isEmpty() || record.getMemberName().contains(memberName.getText());
-        boolean matchesBorrowDate = borrowDate.getText().isEmpty() || record.getBorrowDate().contains(borrowDate.getText());
-        boolean matchesDueDate = dueDate.getText().isEmpty() || record.getDueDate().contains(dueDate.getText());
-        boolean matchesReturnDate = returnDate.getText().isEmpty() || record.getReturnDate().contains(returnDate.getText());
-        boolean matchesStatus = status.getText().isEmpty() || record.getStatus().contains(status.getText());
+        boolean matchesBorrowCode = borrowCode.getText().isEmpty() || record.getBorrowID().toLowerCase().contains(borrowCode.getText().toLowerCase());
+        boolean matchesBookID = bookID.getText().isEmpty() || record.getBookID().toLowerCase().contains(bookID.getText().toLowerCase());
+        boolean matchesBookTitle = bookTitle.getText().isEmpty() || record.getBookTitle().toLowerCase().contains(bookTitle.getText().toLowerCase());
+        boolean matchesMemberID = memberID.getText().isEmpty() || record.getMemberID().toLowerCase().contains(memberID.getText().toLowerCase());
+        boolean matchesMemberName = memberName.getText().isEmpty() || record.getMemberName().toLowerCase().contains(memberName.getText().toLowerCase());
+        boolean matchesBorrowDate = borrowDate.getText().isEmpty() || record.getBorrowDate().toLowerCase().contains(borrowDate.getText().toLowerCase());
+        boolean matchesDueDate = dueDate.getText().isEmpty() || record.getDueDate().toLowerCase().contains(dueDate.getText().toLowerCase());
+        boolean matchesReturnDate = returnDate.getText().isEmpty() || record.getReturnDate().toLowerCase().contains(returnDate.getText().toLowerCase());
+        boolean matchesStatus = status.getText().isEmpty() || record.getStatus().toLowerCase().contains(status.getText().toLowerCase());
 
         // Return true if all conditions are met (matches all search criteria)
         return matchesBorrowCode && matchesBookID && matchesBookTitle && matchesMemberID && matchesMemberName &&

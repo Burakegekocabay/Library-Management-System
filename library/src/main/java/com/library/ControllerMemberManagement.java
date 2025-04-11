@@ -104,10 +104,10 @@ public class ControllerMemberManagement
 
         filteredData.setPredicate(Members -> {
             boolean matchesID = searchID.getText().isEmpty() || Members.getID().contains(searchID.getText());
-            boolean matchesName = searchName.getText().isEmpty() || Members.getName().contains(searchName.getText());
-            boolean matchesMail = searchMail.getText().isEmpty() || Members.getMail().contains(searchMail.getText());
-            boolean matchesPhone = searchPhone.getText().isEmpty() || Members.getPhone().contains(searchPhone.getText());
-            boolean matchesStatus = searchStatus.getText().isEmpty() || Members.getStatus().contains(searchStatus.getText());
+            boolean matchesName = searchName.getText().isEmpty() || Members.getName().toLowerCase().contains(searchName.getText().toLowerCase());
+            boolean matchesMail = searchMail.getText().isEmpty() || Members.getMail().toLowerCase().contains(searchMail.getText().toLowerCase());
+            boolean matchesPhone = searchPhone.getText().isEmpty() || Members.getPhone().toLowerCase().contains(searchPhone.getText().toLowerCase());
+            boolean matchesStatus = searchStatus.getText().isEmpty() || Members.getStatus().toLowerCase().contains(searchStatus.getText().toLowerCase());
             return matchesID && matchesName && matchesMail && matchesPhone && matchesStatus;
         });
 
