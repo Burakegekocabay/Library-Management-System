@@ -57,7 +57,8 @@ And don’t worry — this isn’t the end! We’re planning regular updates and
 **Environment Variables:**  For **safely** store and access database connection details like host, username, and password — without hardcoding sensitive info.
 
 # 📦 Installation
-Alright, we know, sometimes software installations can be a little... intimidating. But don't worry! We've got **```4 different installation methods```** lined up just for you. Pick the one that suits you best and get started. 😊 Do not forget to checkout 
+Alright, we know, sometimes software installations can be a little... intimidating. But don't worry! We've got **```4 different installation methods```** lined up just for you. Pick the one that suits you best and get started. 😊 
+You can reach files from [here](https://github.com/Burakegekocabay/Library-Management-System/releases)
 
 <b> 1) EXE+JAVA+JAVAFX </b>
 
@@ -127,7 +128,7 @@ If you prefer to set the environment variables manually, follow these steps:
 
 ###### 🪟 Windows
 
-Open Control Panel → System → Advanced system settings -> Click Environment Variables. - >Under System Variables, click New and set theese values:
+Open Control Panel → System → Advanced system settings -> Click Environment Variables. - >Under System Variables, click New and set these values:
 
 Variable name: MYSQL_URL
 Variable value: localhost:3306 (this is a default value for xampp check your own program)
@@ -135,10 +136,8 @@ Variable value: localhost:3306 (this is a default value for xampp check your own
 Variable name: MYSQL_USER
 Variable value: root (this is a default value for xampp check your own program)
 
-Variable name: MYSQL_USER
-Variable value: root (this is a default value for xampp check your own program)
 
-Variable name: MYSQL_PASS (if you use "no-password" localhost program just do not create this variable  , otherwise you need to create this (xampp default doesn't use password) )
+Variable name: MYSQL_PASS (if you're using one — XAMPP usually doesn't use a password by default. If you're not using a password, simply skip this variable.)
 Variable value: your_password 
 
 ✅ Click OK, and you’re all set.
