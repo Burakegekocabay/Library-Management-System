@@ -98,6 +98,7 @@ public class ControllerStaffRequests {
 
                 // Set the scene and show the window
                 stage.setScene(new Scene(root2));
+                stage.setResizable(false);
                 stage.show();
             } catch (Exception e) {
                 e.printStackTrace();

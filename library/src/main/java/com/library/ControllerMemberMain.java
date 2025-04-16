@@ -164,6 +164,7 @@ public class ControllerMemberMain {
                 controller.setBorrowLimit(checklimit(userId));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+                stage.setResizable(false);
                 stage.show();
             } catch (Exception e) {
                 e.printStackTrace();

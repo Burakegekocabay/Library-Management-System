@@ -126,6 +126,7 @@ public class ControllerBookManagement {
                 ControllerUpdateBook controller = loader.getController(); // get controller 
                 controller.setBook(book,this::updateTable); // Pass the selected member and the method to update the table
                 stage.setScene(new Scene(root2));
+                stage.setResizable(false);
                 stage.show();
             } catch (Exception e){}
 
@@ -158,6 +159,7 @@ public class ControllerBookManagement {
             ControllerAddBook controller = loader.getController(); // get controller 
             controller.setController(this::updateTable); // Pass the selected book and the method to update the table
             stage.setScene(new Scene(root2));
+            stage.setResizable(false);
             stage.show();
         }
         catch (Exception e){e.printStackTrace();}

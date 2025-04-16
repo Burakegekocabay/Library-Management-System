@@ -40,6 +40,7 @@ public class Utils
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(new Scene(root2));
+            stage.setResizable(false);
             stage.show();
             currentStage.close();
         } catch (Exception e){e.printStackTrace();}

@@ -132,6 +132,7 @@ public class ControllerMemberManagement
                 ControllerUpdateMember controller = loader.getController(); // get controller 
                 controller.setMember(member,this::updateTable); // Pass the selected member and the method to update the table
                 stage.setScene(new Scene(root2));
+                stage.setResizable(false);
                 stage.show();
             } catch (Exception e){}
 
@@ -166,6 +167,7 @@ public class ControllerMemberManagement
             ControllerAddMember controller = loader.getController(); // get controller 
             controller.setController(this::updateTable); // Pass the selected member and the method to update the table
             stage.setScene(new Scene(root2));
+            stage.setResizable(false);
             stage.show();
         }
         catch (Exception e){e.printStackTrace();}
