@@ -2,7 +2,7 @@
 
 The Library Management System is a fully functional application designed to provide an efficient and user-friendly solution for managing various aspects of a library. Built using **JavaFX** for the user interface and **MySQL** for database management, this system simplifies essential library operations such as book management, member tracking, borrowing/returning books, and more.
 
-This release — **version 1.0.0** — is a big step forward: the system is now stable and ready to be used. 🚀  
+This [release](https://github.com/Burakegekocabay/Library-Management-System/releases) — **version 1.1** — is a big step forward: the system is now stable and ready to be used. 🚀  
 And don’t worry — this isn’t the end! We’re planning regular updates and fresh features to keep things growing.
 
 
@@ -116,7 +116,7 @@ Simply run the `xampp_auto_settings.bat` file that’s included in the installat
 
 📁 File: `xampp_auto_settings.bat`
 
-✅ Just double-click it, and it will automatically configure xampp default settings.
+✅ Just right-click it, select **run as a administrator** and it will automatically configure xampp default settings.
 
 🛡️ **Note:** You can modify these values later from your system's environment settings if needed.
 
